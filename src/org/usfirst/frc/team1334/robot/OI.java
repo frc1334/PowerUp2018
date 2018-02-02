@@ -36,12 +36,10 @@ public class OI {
 	// button.whenReleased(new DriveCommand());
 	
 	private static final Xbox360Controller Controller = new Xbox360Controller(0, 0.15);
+	private static final Xbox360Controller Operator = new Xbox360Controller(1, 0.15);
 	
-	public static double getDriverSpeed() {
-		return Controller.getRightTrigger() - Controller.getLeftTrigger();
-	}
-	
-	public static double getSteer() {
-		return Controller.getLeftXAxis();
-	}
+	public static double getDriverSpeed() { return Controller.getRightTrigger() - Controller.getLeftTrigger(); }
+	public static double getSteer() { return Controller.getLeftXAxis(); }
+	public static boolean getHighGear() { return Operator.getButtonB(); }
+	public static boolean getLowGear() { return Operator.getButtonA(); }
 }

@@ -11,14 +11,9 @@ public class Xbox360Controller extends Joystick {
 		this.deadzone  = deadzone;
 		// TODO Auto-generated constructor stub
 	}
-	
-	public double getLeftXAxis () {
-		return deadzone(this.getRawAxis(0));
-	}
-	
-	public double getLeftYAxis () {
-		return deadzone(this.getRawAxis(1));
-	}
+
+	public double getLeftXAxis () { return deadzone(this.getRawAxis(0)); }
+	public double getLeftYAxis () { return deadzone(this.getRawAxis(1)); }
 	
 	public double getLeftTrigger() {return deadzone(this.getRawAxis(2)); }
 	public double getRightTrigger() {return deadzone(this.getRawAxis(3)); }
@@ -35,6 +30,7 @@ public class Xbox360Controller extends Joystick {
 	public boolean getButtonStart() {return this.getRawButton(8); }
 	public boolean getClickLeftStick() {return this.getRawButton(9); }
 	public boolean getClickRightStick() {return this.getRawButton(10); }
+	
 	public double deadzone(double in, double deadzone) {return ((Math.abs(in) <= deadzone) ? 0 : in); }
 	public double deadzone(double in) {return deadzone(in, this.deadzone); }
 }
