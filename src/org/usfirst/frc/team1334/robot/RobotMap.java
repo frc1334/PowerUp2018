@@ -33,7 +33,8 @@ public class RobotMap {
 	public static final int shift1 = 0;
 	public static final int shift2 = 1;
 
-	public static final int breakk = 2;
+	public static final int breakk1 = 2;
+	public static final int breakk2 = 3;
 
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:

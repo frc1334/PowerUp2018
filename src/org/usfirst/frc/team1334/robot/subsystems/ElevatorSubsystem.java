@@ -5,7 +5,8 @@ import org.usfirst.frc.team1334.robot.RobotMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,7 +22,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX Intake2 = new TalonSRX (RobotMap.Intake2);
 	public TalonSRX Elevator1 = new TalonSRX (RobotMap.Elevator1);
 	public TalonSRX Elevator2 = new TalonSRX (RobotMap.Elevator2);
-	public static Solenoid brock = new Solenoid (RobotMap.breakk);
+	public static DoubleSolenoid brock = new DoubleSolenoid (RobotMap.breakk1, RobotMap.breakk2);
 	int elevatorposition = 0;
 	
 	public void intake (boolean inward, boolean outward) {
@@ -51,23 +52,35 @@ public class ElevatorSubsystem extends Subsystem {
 			elevatorposition = 2;
 		}
 		if (brake || speed == 0){
-			brock.set(true);
+			brock.set(Value.kForward);
 		}
 		else {
 			if (topLimit && trueSpeed > 0.5){
-				brock.set(true);
+				brock.set(Value.kForward);
 				elevatorposition = 3;
 			}
 			else if (bottomLimit && trueSpeed < -0.5){
-				brock.set(true);
+				brock.set(Value.kForward);
 				elevatorposition = 1;
 			}
 			else if(elevatorposition == 3 || elevatorposition == 1){
+				brock.set(Value.kReverse);
 				direction = Math.signum(speed);
 				Elevator1.set(ControlMode.PercentOutput, 0.5 * direction);
 			}else{
+				brock.set(Value.kReverse);
 				Elevator1.set(ControlMode.PercentOutput, speed);
 			}
+		}
+	}
+	
+	// test method for kforward and kreverse
+	public void elevTest (boolean active, boolean notactive){
+		if (active && !notactive){
+			brock.set(Value.kForward);
+		}
+		else if (notactive && !active){
+			brock.set(Value.kReverse);
 		}
 	}
 	

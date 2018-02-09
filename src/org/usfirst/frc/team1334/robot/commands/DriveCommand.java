@@ -29,6 +29,9 @@ public class DriveCommand extends Command {
 		//Subsystems.ELEVATOR_SUBSYSTEM.resetElevator([bottom limit switch]);
 		//Subsystems.ELEVATOR_SUBSYSTEM.elevator(OI.OelevateControl(), OI.OelevateBrake(), [top limit switch], [bottom limit switch], [encoder speed]);
 		
+		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
+		// i would swear in these but im apparently not allowed to ;-;
+		Subsystems.ELEVATOR_SUBSYSTEM.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
