@@ -26,6 +26,8 @@ public class DriveCommand extends Command {
 		Subsystems.DRIVE_SUBSYSTEM.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
 		Subsystems.DRIVE_SUBSYSTEM.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
 		Subsystems.ELEVATOR_SUBSYSTEM.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		//Subsystems.ELEVATOR_SUBSYSTEM.resetElevator([bottom limit switch]);
+		//Subsystems.ELEVATOR_SUBSYSTEM.elevator(OI.OelevateControl(), OI.OelevateBrake(), [top limit switch], [bottom limit switch], [encoder speed]);
 		
 	}
 
