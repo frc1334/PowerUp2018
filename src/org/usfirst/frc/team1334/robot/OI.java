@@ -7,39 +7,24 @@ import org.usfirst.frc.team1334.robot.util.Xbox360Controller;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
-
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new DriveCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new DriveCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new DriveCommand());
-	
-	private static final Xbox360Controller Controller = new Xbox360Controller(0, 0.15);
+  //private static final Xbox360Controller [Name] = new Xbox360Controller(port,deadzone);
+	private static final Xbox360Controller Driver = new Xbox360Controller(0, 0.15);
 	private static final Xbox360Controller Operator = new Xbox360Controller(1, 0.15);
 	
-	public static double getDriverSpeed() { return Controller.getRightTrigger() - Controller.getLeftTrigger(); }
-	public static double getSteer() { return Controller.getLeftXAxis(); }
-	public static boolean getHighGear() { return Operator.getButtonB(); }
-	public static boolean getLowGear() { return Operator.getButtonA(); }
+	// Driver Controls
+	public static double DgetDriverSpeed() { return Driver.getRightTrigger() - Driver.getLeftTrigger(); }
+	public static double DgetSteer() { return Driver.getLeftXAxis(); }
+	public static boolean DgetHighGear() { return Driver.getButtonB(); }
+	public static boolean DgetLowGear() { return Driver.getButtonA(); }
+	public static boolean DclimbEngage () { return Driver.getButtonLB(); }
+	public static boolean DclimbDisengage () { return Driver.getButtonRB(); }
+	public static boolean DclimbSpinnyboiL () { return Driver.getButtonY(); }
+	public static boolean DclimbSpinnyboiR () { return Driver.getButtonX(); }
+	
+	// Operator Controls
+	public static boolean OelevateBrake () { return Operator.getButtonX(); }
+	public static double OelevateControl() { return Operator.getLeftYAxis();}
+	public static boolean OgetIntakeReverse () { return Operator.getButtonLB(); }
+	public static boolean OgetIntakeGO () { return Operator.getButtonRB(); }
+	
 }

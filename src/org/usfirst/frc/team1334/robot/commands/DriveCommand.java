@@ -11,6 +11,8 @@ public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Subsystems.DRIVE_SUBSYSTEM);
+		requires(Subsystems.ELEVATOR_SUBSYSTEM);
+		requires(Subsystems.CLIMB_SUBSYSTEM);
 	}
 
 	// Called just before this Command runs the first time
@@ -21,8 +23,10 @@ public class DriveCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Subsystems.DRIVE_SUBSYSTEM.ArcadeDrive(OI.getDriverSpeed(), OI.getSteer());
-		Subsystems.DRIVE_SUBSYSTEM.shiftGear(OI.getHighGear(),OI.getLowGear());
+		Subsystems.DRIVE_SUBSYSTEM.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
+		Subsystems.DRIVE_SUBSYSTEM.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
+		Subsystems.ELEVATOR_SUBSYSTEM.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
