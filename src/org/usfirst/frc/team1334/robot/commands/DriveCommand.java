@@ -32,6 +32,11 @@ public class DriveCommand extends Command {
 		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
 		// i would swear in these but im apparently not allowed to ;-;
 		Subsystems.ELEVATOR_SUBSYSTEM.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+<<<<<<< HEAD
+		Subsystems.CLIMB_SUBSYSTEM.solenoidInit(OI.DclimbEngage());
+		Subsystems.CLIMB_SUBSYSTEM.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
+=======
+>>>>>>> 95b598d579d0abf59d5856403ed5a8a005465ace
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

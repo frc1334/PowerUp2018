@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1334.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -77,7 +78,14 @@ public class Robot extends IterativeRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new DriveCommand(); break; }
 		 */
-
+		autonomousCommand = chooser.getSelected();
+		//String computation goes here
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if(gameData.charAt(0) == 'L'){
+			//Put left auto code here
+		} else {
+			//Put right auto code here
+		}
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
