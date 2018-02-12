@@ -15,9 +15,29 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class DriveSubsystem extends Subsystem {
+	public int kSlotIdx = 0;
+
+	/*
+	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+	 * now we just want the primary one.
+	 */
+	public int kPIDLoopIdx = 0;
+
+	/*
+	 * set to zero to skip waiting for confirmation, set to nonzero to wait and
+	 * report to DS if action fails.
+	 */
+	public int kTimeoutMs = 10;
+	
+	/* choose so that Talon does not report sensor out of phase */
+	public boolean kSensorPhase = true;
+
+	/* choose based on what direction you want to be positive,
+		this does not affect motor invert. */
+	public boolean kMotorInvert = false;
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
-	public final int vMulti = 200;
+	public int vMulti = 200;
 	public TalonSRX Left1 = new TalonSRX(RobotMap.Left1);
 	public TalonSRX Left2 = new TalonSRX(RobotMap.Left2);
 	public TalonSRX Right1 = new TalonSRX(RobotMap.Right1);

@@ -53,14 +53,17 @@ public class ElevatorSubsystem extends Subsystem {
 		}
 		if (brake || speed == 0){
 			brock.set(Value.kForward);
+			Elevator1.set(ControlMode.PercentOutput, 0);
 		}
 		else {
 			if (topLimit && trueSpeed > 0.5){
 				brock.set(Value.kForward);
+				Elevator1.set(ControlMode.PercentOutput, 0);
 				elevatorposition = 3;
 			}
 			else if (bottomLimit && trueSpeed < -0.5){
 				brock.set(Value.kForward);
+				Elevator1.set(ControlMode.PercentOutput, 0);
 				elevatorposition = 1;
 			}
 			else if(elevatorposition == 3 || elevatorposition == 1){
@@ -78,13 +81,16 @@ public class ElevatorSubsystem extends Subsystem {
 	public void elevTest (boolean active, boolean notactive){
 		if (active && !notactive){
 			brock.set(Value.kForward);
+			Elevator1.set(ControlMode.PercentOutput, 0);
 		}
 		else if (notactive && !active){
 			brock.set(Value.kReverse);
+			Elevator1.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
-    public void initDefaultCommand() {
+    @Override
+	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	Intake2.set(ControlMode.Follower, 4);
