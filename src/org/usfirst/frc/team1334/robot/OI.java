@@ -16,10 +16,10 @@ public class OI {
 	public static double DgetSteer() { return Driver.getLeftXAxis(); }
 	public static boolean DgetHighGear() { return Driver.getButtonB(); }
 	public static boolean DgetLowGear() { return Driver.getButtonA(); }
-	public static boolean DclimbEngage () { return Driver.getButtonLB(); }
-	public static boolean DclimbDisengage () { return Driver.getButtonRB(); }
-	public static boolean DclimbSpinnyboiL () { return Driver.getButtonY(); }
-	public static boolean DclimbSpinnyboiR () { return Driver.getButtonX(); }
+	public static boolean DclimbEngage () { return Driver.getButtonX(); }
+	public static boolean DclimbDisengage () { return Driver.getButtonY(); }
+	public static boolean DclimbSpinnyboiL () { return Driver.getButtonLB(); }
+	public static boolean DclimbSpinnyboiR () { return Driver.getButtonRB(); }
 	
 	// Operator Controls
 	public static boolean OelevateBrake () { return Operator.getButtonX(); }

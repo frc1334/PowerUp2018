@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry including="org/|org/usfirst/frc/team1334/robot/OI.java|org/usfirst/frc/team1334/robot/util/" kind="src" path="src"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="var" path="networktables" sourcepath="ntcore.sources"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>

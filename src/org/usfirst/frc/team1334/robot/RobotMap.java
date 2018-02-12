@@ -35,6 +35,9 @@ public class RobotMap {
 
 	public static final int breakk1 = 2;
 	public static final int breakk2 = 3;
+	
+	public static final int eject1 = 4;
+	public static final int eject2 = 5;
 
 	public static final int eject1 = 4;
 	public static final int eject2 = 5;
