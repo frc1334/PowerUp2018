@@ -24,7 +24,7 @@ public class Baseline extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveCommand(265.658));
+    	addSequential(new AutoDriveCommand((int) 265.658));
     	
     }
 }

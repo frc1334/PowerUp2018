@@ -24,9 +24,9 @@ public class LeftSideSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new AutoDriveCommand(148.517));
+    	addParallel(new AutoDriveCommand((int) 148.517));
     	addSequential (new ElevatorCommand(1));
     	addSequential (new GyroTurn(90));
-    	addSquential (new IntakeCommand(0));
+    	addSequential (new IntakeCommand(0));
     }
 }

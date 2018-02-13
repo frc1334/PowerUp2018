@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1334.robot.subsystems.DriveSubsystem;
+import org.usfirst.frc.team1334.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team1334.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1334.robot.OI;
 
 /**
@@ -21,6 +23,9 @@ import org.usfirst.frc.team1334.robot.OI;
 public class Robot extends IterativeRobot {
 
 	public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
+	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
+	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
+	
 	public static OI oi;
 
 	Command autonomousCommand;

@@ -24,12 +24,12 @@ public class CenterLeftSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDrive(12));
+    	addSequential(new AutoDriveCommand(12));
     	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDrive(78.813));
+    	addSequential(new AutoDriveCommand((int) 78.813));
     	addParallel(new GyroTurn(90));
     	addSequential(new ElevatorCommand(1));
-    	addSequential(new AutoDrive(76.37));
+    	addSequential(new AutoDriveCommand((int) 76.37));
     	addSequential(new IntakeCommand(0));
     }
 }
