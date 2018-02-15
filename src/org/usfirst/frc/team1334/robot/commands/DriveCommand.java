@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1334.robot.commands;
 
 import org.usfirst.frc.team1334.robot.OI;
+import org.usfirst.frc.team1334.robot.Robot;
 import org.usfirst.frc.team1334.robot.util.Subsystems;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -15,7 +15,7 @@ public class DriveCommand extends Command {
 		requires(Subsystems.ELEVATOR_SUBSYSTEM);
 		requires(Subsystems.CLIMB_SUBSYSTEM);
 	}
-
+	
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
@@ -27,13 +27,15 @@ public class DriveCommand extends Command {
 		Subsystems.DRIVE_SUBSYSTEM.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
 		Subsystems.DRIVE_SUBSYSTEM.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
 		Subsystems.ELEVATOR_SUBSYSTEM.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
-		//Subsystems.ELEVATOR_SUBSYSTEM.resetElevator([bottom limit switch]);
-		//Subsystems.ELEVATOR_SUBSYSTEM.elevator(OI.OelevateControl(), OI.OelevateBrake(), [top limit switch], [bottom limit switch], [encoder speed]);
+		Subsystems.ELEVATOR_SUBSYSTEM.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());
+		Subsystems.ELEVATOR_SUBSYSTEM.topElevator(Robot.ElevatorSubsystem.HighWarn.get());
+		Subsystems.ELEVATOR_SUBSYSTEM.elevator(OI.OelevateControl(), OI.OelevateBrake(), Robot.ElevatorSubsystem.HighWarn.get(), 
+				Robot.ElevatorSubsystem.LowWarn.get(), Robot.ElevatorSubsystem.height.get());
 		
 		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
 		// i would swear in these but im apparently not allowed to ;-;
 		Subsystems.ELEVATOR_SUBSYSTEM.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
-
+		
 		Subsystems.CLIMB_SUBSYSTEM.solenoidInit(OI.DclimbEngage());
 		Subsystems.CLIMB_SUBSYSTEM.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
 

@@ -38,7 +38,12 @@ public class RobotMap {
 	
 	public static final int eject1 = 4;
 	public static final int eject2 = 5;
-
+	//Digital IO Ports
+	public static final int lowwarn = 0;
+	public static final int highwarn = 1;
+	public static final int ElevA = 2;
+	public static final int ElevB = 3;
+	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;
