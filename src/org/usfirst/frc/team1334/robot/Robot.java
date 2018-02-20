@@ -37,6 +37,7 @@ public class Robot extends IterativeRobot {
 
 	public boolean SwitchState;
 	public boolean ScaleState;
+	// true for right, false for left
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,6 +51,17 @@ public class Robot extends IterativeRobot {
 		//chooser.addDefault("Default program", new );
 		//chooser.addObject("Experimental Auto", new );
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		chooser.addDefault("Baseline", new Baseline());
+		if (SwitchState) { chooser.addObject("Left Switch", new LeftRightSwitch()); }
+		else if (!SwitchState) { chooser.addObject("Left Switch", new LeftSideSwitch()); }
+		if (SwitchState) { chooser.addObject("Center Switch", new CenterRightSwitch()); }
+		else if (!SwitchState) { chooser.addObject("Center Switch", new CenterLeftSwitch()); }
+		if (SwitchState) { chooser.addObject("Right Switch", new RightSideSwitch()); }
+		else if (!SwitchState) { chooser.addObject("Right Switch", new RightLeftSwitch()); }
+		
+		if (ScaleState) { chooser.addObject("Right Start Scale", new RightScale()); }
+		if (!ScaleState) { chooser.addObject("Left Start Scale", new LeftScale()); }
+		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
