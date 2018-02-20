@@ -90,12 +90,11 @@ public class DriveSubsystem extends PIDSubsystem {
 	}
 
 	public void ArcadeDrive(double speed, double turn){
-		speed *= vMulti;
-		turn *= vMulti;
-		TankDrive(speed +turn, -speed + turn);
 		
-		System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
-		System.out.println(Right1.getClosedLoopError(0));
+		TankDrive(-speed -turn, speed - turn);
+		
+		//System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
+		//System.out.println(Right1.getClosedLoopError(0));
 	}
 
 	@Override

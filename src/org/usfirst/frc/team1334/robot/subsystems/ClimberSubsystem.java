@@ -20,17 +20,23 @@ public class ClimberSubsystem extends Subsystem {
 	//  Boolean variable for activating the solenoids
 	
 	public void solenoidInit(boolean up){
-		if(up){
+		if(!up){
 			ClimbSol.set(DoubleSolenoid.Value.kForward);
+		}else if(up){
+			ClimbSol.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
 	
 	public void winch(boolean left, boolean right){
 		if (left){
 			Climb1.set(ControlMode.PercentOutput, 1);
+		}else{
+			Climb1.set(ControlMode.PercentOutput, 0);
 		}
 		if (right){
 			Climb2.set(ControlMode.PercentOutput, 1);
+		}else{
+			Climb2.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	

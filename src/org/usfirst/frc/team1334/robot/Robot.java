@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1334.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1334.robot.subsystems.ElevatorSubsystem;
+import org.usfirst.frc.team1334.robot.util.Subsystems;
 import org.usfirst.frc.team1334.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1334.robot.OI;
+import org.usfirst.frc.team1334.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,10 +27,12 @@ public class Robot extends IterativeRobot {
 	public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
 	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
 	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
+	//public Subsystems subsystem = new Subsystems();
 	
 	public static OI oi;
 
 	Command autonomousCommand;
+	Command driveCommand = new DriveCommand();
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
 	
@@ -113,6 +117,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		driveCommand.start();
 	}
 
 	/**

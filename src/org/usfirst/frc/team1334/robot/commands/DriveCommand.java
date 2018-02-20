@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Subsystems.DRIVE_SUBSYSTEM);
-		requires(Subsystems.ELEVATOR_SUBSYSTEM);
-		requires(Subsystems.CLIMB_SUBSYSTEM);
+		requires(Robot.DriveSubsystem);
+		requires(Robot.ElevatorSubsystem);
+		requires(Robot.ClimberSubsystem);
 	}
 	
 	// Called just before this Command runs the first time
@@ -24,20 +24,21 @@ public class DriveCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Subsystems.DRIVE_SUBSYSTEM.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
-		Subsystems.DRIVE_SUBSYSTEM.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
-		Subsystems.ELEVATOR_SUBSYSTEM.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
-		Subsystems.ELEVATOR_SUBSYSTEM.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());
-		Subsystems.ELEVATOR_SUBSYSTEM.topElevator(Robot.ElevatorSubsystem.HighWarn.get());
-		Subsystems.ELEVATOR_SUBSYSTEM.elevator(OI.OelevateControl(), OI.OelevateBrake(), Robot.ElevatorSubsystem.HighWarn.get(), 
-				Robot.ElevatorSubsystem.LowWarn.get(), Robot.ElevatorSubsystem.height.get());
+		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
+		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
+		Robot.ElevatorSubsystem.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		//Robot.ElevatorSubsystem.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());
+		//Robot.ElevatorSubsystem.topElevator(Robot.ElevatorSubsystem.HighWarn.get());
 		
+			//	Robot.ElevatorSubsystem.LowWarn.get(), Robot.ElevatorSubsystem.height.get());
+		Robot.ElevatorSubsystem.elevator(OI.OelevateControl(), OI.OelevateBrake(),Robot.ElevatorSubsystem.HighWarn.get(),Robot.ElevatorSubsystem.LowWarn.get(),Robot.ElevatorSubsystem.Elevator1.getSelectedSensorVelocity(0));
+		//Robot.ElevatorSubsystem.elevator(OI.OelevateControl(),OI.OelevateBrake());
 		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
 		// i would swear in these but im apparently not allowed to ;-;
-		Subsystems.ELEVATOR_SUBSYSTEM.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		//Robot.ElevatorSubsystem.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
 		
-		Subsystems.CLIMB_SUBSYSTEM.solenoidInit(OI.DclimbEngage());
-		Subsystems.CLIMB_SUBSYSTEM.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
+		Robot.ClimberSubsystem.solenoidInit(OI.DclimbEngage());
+		Robot.ClimberSubsystem.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
 
 	}
 

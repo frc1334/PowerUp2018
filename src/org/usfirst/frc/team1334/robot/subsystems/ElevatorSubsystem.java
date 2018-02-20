@@ -3,6 +3,7 @@ package org.usfirst.frc.team1334.robot.subsystems;
 import org.usfirst.frc.team1334.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -49,23 +50,27 @@ public class ElevatorSubsystem extends Subsystem {
 	public TalonSRX Intake1 = new TalonSRX (RobotMap.Intake1);
 	public TalonSRX Intake2 = new TalonSRX (RobotMap.Intake2);
 	public TalonSRX Elevator1 = new TalonSRX (RobotMap.Elevator1);
+	
 	public TalonSRX Elevator2 = new TalonSRX (RobotMap.Elevator2);
 	public DigitalInput LowWarn = new DigitalInput(RobotMap.lowwarn);
 	public DigitalInput HighWarn = new DigitalInput(RobotMap.highwarn);
 	boolean reversesensor = false;
-	public Encoder height = new Encoder(RobotMap.ElevA, RobotMap.ElevB, reversesensor);	
+
 	public static DoubleSolenoid brock = new DoubleSolenoid (RobotMap.breakk1, RobotMap.breakk2);
-	int elevatorposition = 0;
+	int elevatorposition = 1;
 	
 	public void intake (boolean inward, boolean outward) {
 		if (inward && !outward){
 			Intake1.set(ControlMode.PercentOutput, 1);
+			Intake2.set(ControlMode.PercentOutput, -1);
 		}
 		else if (outward && !inward){
 			Intake1.set(ControlMode.PercentOutput, -1);
+			Intake2.set(ControlMode.PercentOutput, 1);
 		}
 		else {
 			Intake1.set(ControlMode.PercentOutput, 0);
+			Intake2.set(ControlMode.PercentOutput, 0);
 		}
 	}
 	
@@ -89,33 +94,55 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 	
 	public void elevator (double speed, boolean brake, boolean topLimit, boolean bottomLimit, double trueSpeed){
+	
+		speed*=-1;
 		
-		if(bottomLimit&&speed>0 || topLimit && speed<0){
+		
+		if(!bottomLimit&&speed>0 || !topLimit && speed<0){
 			elevatorposition = 2;
 		}
-		if (brake || speed == 0){
-			//brock.set(Value.kForward);
+		if(!bottomLimit && speed < 0){
+			elevatorposition = 1;
+		}
+		if(!topLimit && speed > 0){
+			elevatorposition = 3;
+		}
+		
+		if(brake){
+			direction = Math.signum(speed);
+			Elevator1.set(ControlMode.PercentOutput, 0.3*direction);
+		}
+		else if (!topLimit && speed > 10){
 			Elevator1.set(ControlMode.PercentOutput, 0);
 		}
-		else {
-			if (topLimit && trueSpeed > 0.5){
-				//brock.set(Value.kForward);
-				Elevator1.set(ControlMode.PercentOutput, 0);
-				elevatorposition = 3;
-			}
-			else if (bottomLimit && trueSpeed < -0.5){
-				//brock.set(Value.kForward);
-				Elevator1.set(ControlMode.PercentOutput, 0);
-				elevatorposition = 1;
-			}
-			else if(elevatorposition == 3 || elevatorposition == 1){
-				//brock.set(Value.kReverse);
-				direction = Math.signum(speed);
-				Elevator1.set(ControlMode.PercentOutput, 0.5 * direction);
-			}else{
-				//brock.set(Value.kReverse);
-				Elevator1.set(ControlMode.PercentOutput, speed);
-			}
+		else if (!bottomLimit && speed < -10){
+			Elevator1.set(ControlMode.PercentOutput, 0);
+		}
+		else if(elevatorposition == 1){
+			//brock.set(Value.kReverse);
+			direction = Math.signum(speed);
+			Elevator1.set(ControlMode.PercentOutput, 0.3 * direction);
+		}else if(elevatorposition == 3){
+			direction = Math.signum(speed);
+			Elevator1.set(ControlMode.PercentOutput, 0.1 * direction);
+		}
+			else{
+			//brock.set(Value.kReverse);
+			Elevator1.set(ControlMode.PercentOutput, speed);
+		}
+		
+	}
+	
+	public void elevator(double speed,  boolean brake){
+		System.out.println(Elevator1.getSelectedSensorVelocity(0));
+		System.out.println(HighWarn.get()+"HighWarn");
+		System.out.println(LowWarn.get()+"LowWarn");
+		if(brake){
+			direction = Math.signum(speed);
+			Elevator1.set(ControlMode.PercentOutput, direction*0.3);
+			Elevator2.set(ControlMode.Follower, 6);
+		}else{
+			Elevator1.set(ControlMode.PercentOutput, speed);
 		}
 	}
 	
@@ -135,8 +162,11 @@ public class ElevatorSubsystem extends Subsystem {
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	Intake2.set(ControlMode.Follower, 4);
+    	//Intake2.set(ControlMode.Follower, 4);
+    	//Intake2.setInverted(true);
     	Elevator2.set(ControlMode.Follower, 6);
+    	Elevator1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 50);
+    
     }
 }
 

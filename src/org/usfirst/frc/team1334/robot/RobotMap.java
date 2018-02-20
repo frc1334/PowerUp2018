@@ -22,7 +22,7 @@ public class RobotMap {
 	public static final int Intake1 = 4;
 	public static final int Intake2 = 5;
 	
-	public static final int Elevator1 = 6;
+	public static final int Elevator1 = 6; 
 	public static final int Elevator2 = 7;
 	
 	public static final int Climb1 = 8;
@@ -30,14 +30,14 @@ public class RobotMap {
 	//the compressor uses another
 	public static final int Compressor = 0;
 	//and the PCM uses yet anoter set of IDS
-	public static final int shift1 = 0;
-	public static final int shift2 = 1;
+	public static final int shift1 = 2;
+	public static final int shift2 = 3;
 
-	public static final int breakk1 = 2;
-	public static final int breakk2 = 3;
+	public static final int breakk1 = 4;
+	public static final int breakk2 = 5;
 	
-	public static final int eject1 = 4;
-	public static final int eject2 = 5;
+	public static final int eject1 = 0;
+	public static final int eject2 = 1;
 	//Digital IO Ports
 	public static final int lowwarn = 0;
 	public static final int highwarn = 1;
