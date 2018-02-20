@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -46,11 +45,9 @@ public class ElevatorSubsystem extends Subsystem {
 	public double kToleranceDegrees = 2.0;
 	
 	double direction;
-	
 	public TalonSRX Intake1 = new TalonSRX (RobotMap.Intake1);
 	public TalonSRX Intake2 = new TalonSRX (RobotMap.Intake2);
 	public TalonSRX Elevator1 = new TalonSRX (RobotMap.Elevator1);
-	
 	public TalonSRX Elevator2 = new TalonSRX (RobotMap.Elevator2);
 	public DigitalInput LowWarn = new DigitalInput(RobotMap.lowwarn);
 	public DigitalInput HighWarn = new DigitalInput(RobotMap.highwarn);
