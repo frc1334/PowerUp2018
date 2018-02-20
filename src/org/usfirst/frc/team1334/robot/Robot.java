@@ -35,7 +35,8 @@ public class Robot extends IterativeRobot {
 	Command driveCommand = new DriveCommand();
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
-	
+	public boolean SwitchState;
+	public boolean ScaleState;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -81,24 +82,30 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autonomousCommand = chooser.getSelected();
-
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new DriveCommand(); break; }
 		 */
-		autonomousCommand = chooser.getSelected();
 		//String computation goes here
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if(gameData.charAt(0) == 'L'){
 			//Put left auto code here
-		} else {
+			SwitchState = true;
+		}else if(gameData.charAt(0) == 'R'){
 			//Put right auto code here
+			SwitchState = false;
+		}
+		if(gameData.charAt(1) == 'L'){
+			ScaleState = true;
+		}else if(gameData.charAt(1) == 'R'){
+			ScaleState = false;
 		}
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null)
+		if (autonomousCommand != null){
 			autonomousCommand.start();
+		}
 	}
 
 	/**
