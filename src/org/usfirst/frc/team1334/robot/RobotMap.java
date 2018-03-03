@@ -25,6 +25,9 @@ public class RobotMap {
 	public static final int Elevator1 = 6; 
 	public static final int Elevator2 = 7;
 	
+	public static final int Shooter1 = 6;
+	public static final int Shooter2 = 7;
+	
 	public static final int Climb1 = 8;
 	public static final int Climb2 = 9;
 	//the compressor uses another
@@ -43,6 +46,9 @@ public class RobotMap {
 	public static final int highwarn = 1;
 	public static final int ElevA = 2;
 	public static final int ElevB = 3;
+	
+	public static final int Piston1 = 4;
+	public static final int Piston2 = 5;
 	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
