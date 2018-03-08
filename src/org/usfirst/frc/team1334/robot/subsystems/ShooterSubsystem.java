@@ -13,6 +13,7 @@ public class ShooterSubsystem extends Subsystem{
 	
 	public TalonSRX Intake1 = new TalonSRX (RobotMap.Intake1);
 	public TalonSRX Intake2 = new TalonSRX (RobotMap.Intake2);
+	public TalonSRX Shooter = new TalonSRX (RobotMap.Shooter1);
 	
 	public DoubleSolenoid Piston = new DoubleSolenoid (RobotMap.Piston1, RobotMap.Piston2);
 	
