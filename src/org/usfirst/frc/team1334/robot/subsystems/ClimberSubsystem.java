@@ -34,7 +34,7 @@ public class ClimberSubsystem extends Subsystem {
 			Climb1.set(ControlMode.PercentOutput, 0);
 		}
 		if (right){
-			Climb2.set(ControlMode.PercentOutput, 1);
+			Climb2.set(ControlMode.PercentOutput, -1);
 		}else{
 			Climb2.set(ControlMode.PercentOutput, 0);
 		}

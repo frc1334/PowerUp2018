@@ -18,12 +18,15 @@ public class DriveCommand extends Command {
 	// Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.DriveSubsystem.Left1.setInverted(false);
+		Robot.DriveSubsystem.Left2.setInverted(false);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
+		System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
 		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
 		Robot.ElevatorSubsystem.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
 		//Robot.ElevatorSubsystem.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());

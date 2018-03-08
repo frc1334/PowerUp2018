@@ -49,7 +49,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public double rotateToAngleRate;
 	static int b;
 	public AHRS ahrs;
-	public boolean isstill = false;
+	public boolean isstill = true;
 	public float minimalvoltage = 0.23f;
 	public double post = 0;
 	public double negt = 0;
@@ -62,7 +62,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public static DoubleSolenoid gShift = new DoubleSolenoid(RobotMap.shift1, RobotMap.shift2);
 
 	public DriveSubsystem() {
-		super("Drive", 0.03,0.0,0,0);
+		super("Drive", 0.01,0.0,0,0);
 		super.getPIDController().setInputRange(-180.0f,  180.0f);
         super.getPIDController().setOutputRange(-1.0, 1.0);
         setAbsoluteTolerance(kToleranceDegrees);
@@ -120,10 +120,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	public void shiftGear (boolean up, boolean down){ // Gear shift method
 		if (up) { // if high gear is activated
-			gShift.set(Value.kForward);
+			gShift.set(Value.kReverse);
 		}
 		else if (down) {
-			gShift.set(Value.kReverse);
+			gShift.set(Value.kForward);
 		}
 	}
 	

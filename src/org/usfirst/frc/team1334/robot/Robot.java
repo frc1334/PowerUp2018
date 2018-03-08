@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team1334.robot.subsystems.DriveSubsystem;
 import org.usfirst.frc.team1334.robot.subsystems.ElevatorSubsystem;
 import org.usfirst.frc.team1334.robot.util.Subsystems;
+
+
 import org.usfirst.frc.team1334.robot.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team1334.robot.OI;
 import org.usfirst.frc.team1334.robot.commands.*;
@@ -52,15 +54,26 @@ public class Robot extends IterativeRobot {
 		//chooser.addObject("Experimental Auto", new );
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		chooser.addDefault("Baseline", new Baseline());
-		if (SwitchState) { chooser.addObject("Left Switch", new LeftRightSwitch()); }
-		else if (!SwitchState) { chooser.addObject("Left Switch", new LeftSideSwitch()); }
-		if (SwitchState) { chooser.addObject("Center Switch", new CenterRightSwitch()); }
-		else if (!SwitchState) { chooser.addObject("Center Switch", new CenterLeftSwitch()); }
-		if (SwitchState) { chooser.addObject("Right Switch", new RightSideSwitch()); }
-		else if (!SwitchState) { chooser.addObject("Right Switch", new RightLeftSwitch()); }
+		if (SwitchState) { 
+			chooser.addObject("Left Switch", new LeftRightSwitch());
+			chooser.addObject("Center Switch", new CenterRightSwitch()); 
+			chooser.addObject("Right Switch", new RightSideSwitch());
+			}
+		else if (!SwitchState) { 
+			chooser.addObject("Left Switch", new LeftSideSwitch()); 
+			chooser.addObject("Center Switch", new CenterLeftSwitch());
+			chooser.addObject("Right Switch", new RightLeftSwitch());
+			}
+
+		if (ScaleState) { 
+			chooser.addObject("Right Start Scale", new RightScale()); 
+			chooser.addObject("Left Start Scale", new LeftRightScale());
+			}
+		if (!ScaleState) { 
+			chooser.addObject("Left Start Scale", new LeftScale()); 
+			chooser.addObject("Right Start Scale", new RightLeftScale());
+		}
 		
-		if (ScaleState) { chooser.addObject("Right Start Scale", new RightScale()); }
-		if (!ScaleState) { chooser.addObject("Left Start Scale", new LeftScale()); }
 		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -93,7 +106,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected();
+		Robot.DriveSubsystem.ResetGyroAngle();
+		autonomousCommand = new AutoDriveCommand(1000);
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

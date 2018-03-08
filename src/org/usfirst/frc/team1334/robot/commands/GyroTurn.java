@@ -29,7 +29,7 @@ public class GyroTurn extends Command {
     protected void execute() {
     	
     	Robot.DriveSubsystem.usePIDOutput(Robot.DriveSubsystem.getPIDController().get());
-    	Robot.DriveSubsystem.ArcadeDrive(Robot.DriveSubsystem.rotateToAngleRate, 0);
+    	Robot.DriveSubsystem.ArcadeDrive(0, Robot.DriveSubsystem.rotateToAngleRate);
     	if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 1 ){
     		Start = System.currentTimeMillis();
     	}else{
@@ -39,7 +39,8 @@ public class GyroTurn extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(End-Start > 500){
+        if(End-Start > 2000){
+        	System.out.println("finished");
         	return true;
         }
         return false;
