@@ -11,7 +11,7 @@ public class DriveCommand extends Command {
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.DriveSubsystem);
-		requires(Robot.ElevatorSubsystem);
+		requires(Robot.ShooterSubsystem);
 		requires(Robot.ClimberSubsystem);
 	}
 	
@@ -28,12 +28,12 @@ public class DriveCommand extends Command {
 		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
 		System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
 		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
-		Robot.ElevatorSubsystem.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		Robot.ShooterSubsystem.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
 		//Robot.ElevatorSubsystem.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());
 		//Robot.ElevatorSubsystem.topElevator(Robot.ElevatorSubsystem.HighWarn.get());
 		
-			//	Robot.ElevatorSubsystem.LowWarn.get(), Robot.ElevatorSubsystem.height.get());
-		Robot.ElevatorSubsystem.elevator(OI.OelevateControl(), OI.OelevateBrake(),Robot.ElevatorSubsystem.HighWarn.get(),Robot.ElevatorSubsystem.LowWarn.get(),Robot.ElevatorSubsystem.Elevator1.getSelectedSensorVelocity(0));
+		//	Robot.ElevatorSubsystem.LowWarn.get(), Robot.ElevatorSubsystem.height.get());
+		
 		//Robot.ElevatorSubsystem.elevator(OI.OelevateControl(),OI.OelevateBrake());
 		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
 		// i would swear in these but im apparently not allowed to ;-;

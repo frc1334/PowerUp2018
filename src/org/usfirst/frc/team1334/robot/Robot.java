@@ -14,6 +14,7 @@ import org.usfirst.frc.team1334.robot.util.Subsystems;
 
 
 import org.usfirst.frc.team1334.robot.subsystems.ClimberSubsystem;
+import org.usfirst.frc.team1334.robot.subsystems.ShooterSubsystem;
 import org.usfirst.frc.team1334.robot.OI;
 import org.usfirst.frc.team1334.robot.commands.*;
 
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 
 	public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
 	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
+	public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
 	//public Subsystems subsystem = new Subsystems();
 	
