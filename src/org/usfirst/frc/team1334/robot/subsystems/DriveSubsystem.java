@@ -50,7 +50,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	static int b;
 	public AHRS ahrs;
 	public boolean isstill = true;
-	public float minimalvoltage = 0.23f;
+	public float minimalvoltage = 0.15f;
 	public double post = 0;
 	public double negt = 0;
 	
@@ -148,10 +148,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	@Override
 	public void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		if(output >=0.8 ){
-			rotateToAngleRate = 0.8;
-		}else if(output<=-0.8){
-			rotateToAngleRate = -0.8;
+		if(output >=0.6 ){
+			rotateToAngleRate = 0.6;
+		}else if(output<=-0.6){
+			rotateToAngleRate = -0.6;
 		}else{
 			rotateToAngleRate = output;
 		}

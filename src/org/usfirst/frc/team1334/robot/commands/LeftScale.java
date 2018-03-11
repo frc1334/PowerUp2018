@@ -25,8 +25,8 @@ public class LeftScale extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	addSequential(new AutoDriveCommand((int) 304.19));
-    	addParallel(new GyroTurn(90));
-    	addSequential(new ElevatorCommand(2));
-    	addSequential(new IntakeCommand(0));
+    	addSequential(new GyroTurn(90));
+    	//addSequential(new ElevatorCommand(2));
+    	//addSequential(new IntakeCommand(0));
     }
 }

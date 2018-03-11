@@ -108,7 +108,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		//autonomousCommand = chooser.getSelected();
 		Robot.DriveSubsystem.ResetGyroAngle();
-		autonomousCommand = new AutoDriveCommand(1000);
+		autonomousCommand = new CenterLeftSwitch();
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

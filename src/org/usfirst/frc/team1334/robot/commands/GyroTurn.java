@@ -20,6 +20,8 @@ public class GyroTurn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize(){
+    	Robot.DriveSubsystem.Left1.setInverted(false);
+    	Robot.DriveSubsystem.Left2.setInverted(false);
     	Start = System.currentTimeMillis();
     	End = System.currentTimeMillis();
     	Robot.DriveSubsystem.setSetpoint(Robot.DriveSubsystem.GyroDrive(Angle));
@@ -39,7 +41,7 @@ public class GyroTurn extends Command {
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(End-Start > 2000){
+        if(End-Start > 200){
         	System.out.println("finished");
         	return true;
         }

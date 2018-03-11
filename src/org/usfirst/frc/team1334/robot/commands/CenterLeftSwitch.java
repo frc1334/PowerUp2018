@@ -27,9 +27,9 @@ public class CenterLeftSwitch extends CommandGroup {
     	addSequential(new AutoDriveCommand(12));
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand((int) 78.813));
-    	addParallel(new GyroTurn(90));
-    	addSequential(new ElevatorCommand(1));
+    	addSequential(new GyroTurn(90));
+    	//addSequential(new ElevatorCommand(1));
     	addSequential(new AutoDriveCommand((int) 76.37));
-    	addSequential(new IntakeCommand(0));
+    	//addSequential(new IntakeCommand(0));
     }
 }
