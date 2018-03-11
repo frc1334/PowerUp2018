@@ -33,6 +33,10 @@ public class ShooterSubsystem extends Subsystem{
 		}
 	}
 	
+	public void driveShooter (double power) {
+		Shooter.set(ControlMode.PercentOutput, power);
+	}
+	
 	public void highGoal () {
 		intake(false,true);
 		Piston.set(Value.kForward);
