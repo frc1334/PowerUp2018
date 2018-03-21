@@ -1,5 +1,5 @@
 package org.usfirst.frc.team1334.robot.commands;
-
+import org.usfirst.frc.team1334.robot.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,13 +24,14 @@ public class LeftRightSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveCommand((int) 206.82));
+    	//addParallel(new ShooterAngle(15));
+    	addSequential(new AutoDriveCommand(Robot.kOppSwitchForward));
     	addSequential(new GyroTurn(90));
-    	addSequential(new AutoDriveCommand(200));
+    	addSequential(new AutoDriveCommand(Robot.kOppSwitchAcross));
     	addSequential(new GyroTurn(90));
-    	addParallel(new AutoDriveCommand((int) 58.30));
-    	addSequential(new ElevatorCommand(1));
+    	addSequential(new AutoDriveCommand(Robot.kOppSwitchDown));
     	addSequential(new GyroTurn(90));
-    	addSequential(new IntakeCommand(0));
+    	addSequential(new AutoDriveCommand(Robot.kOppSwitchBack));
+    	//addSequential(new AutoShooterCommand(false));
     }
 }

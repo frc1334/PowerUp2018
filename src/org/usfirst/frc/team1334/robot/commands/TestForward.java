@@ -5,9 +5,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LeftScale extends CommandGroup {
+public class TestForward extends CommandGroup {
 
-    public LeftScale() {
+    public TestForward() {
+    	addSequential(new AutoDriveCommand(12));
+    	addSequential(new AutoDriveCommand(12));
+    	addSequential(new AutoDriveCommand(12));
+    	addSequential(new AutoDriveCommand(12));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,9 +28,5 @@ public class LeftScale extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveCommand((int) 304.19));
-    	addSequential(new GyroTurn(90));
-    	//addSequential(new ElevatorCommand(2));
-    	//addSequential(new IntakeCommand(0));
     }
 }

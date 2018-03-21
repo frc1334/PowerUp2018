@@ -4,6 +4,8 @@ import org.usfirst.frc.team1334.robot.Robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,8 +16,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoDriveCommand extends Command {
 	int distance = 0;
 	long startTime, endTime;
-	boolean inRange;
+	boolean inRange = false;
 	double ticks;
+	
+	double error;
+	double minimumvoltage = 0.13;
     public AutoDriveCommand(int Distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -26,6 +31,7 @@ public class AutoDriveCommand extends Command {
     // Called just before this Command runs the first time
     @Override
 	protected void initialize() {
+
     	endTime = System.currentTimeMillis();
     	startTime = System.currentTimeMillis();
     	Robot.DriveSubsystem.gShift.set(Value.kForward);
@@ -68,16 +74,16 @@ public class AutoDriveCommand extends Command {
 		/* set closed loop gains in slot0, typically kF stays zero. */
 		Robot.DriveSubsystem.Left1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0001, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.002, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(1063, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.configMotionAcceleration(2126, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//Do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Right1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0001, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.002, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(1063, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.configMotionAcceleration(2126, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Left2.set(ControlMode.Follower, 0);
 		Robot.DriveSubsystem.Right2.set(ControlMode.Follower, 2);
 		Robot.DriveSubsystem.Left1.setInverted(true);
@@ -105,20 +111,35 @@ public class AutoDriveCommand extends Command {
 		Robot.DriveSubsystem.Left1.setSelectedSensorPosition(absolutePosition, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.setSelectedSensorPosition(absolutePosition2, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		//distance to ticks conversion if 128codes/rev
-		ticks = distance* 73.3524416136*4;
+		ticks = distance* 79.3524416136*4;
 		System.out.println(ticks +" distance " + distance);
     	Robot.DriveSubsystem.Left1.set(ControlMode.MotionMagic, ticks);
     	Robot.DriveSubsystem.Right1.set(ControlMode.MotionMagic, ticks);
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	/*System.currentTimeMillis();
-    	Robot.DriveSubsystem.Left1.getClosedLoopError(0);
-    	*/
-    	System.out.println(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0));
-    	inRange = Math.abs(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0) ) <= 100;
+    	
+    	error = ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0);
+    	if(Math.abs(error)<=300 && endTime-startTime < -500){//DO NOT REMOVE THE TIME REQUIREMENT OR ELSE THE PREVIOUS ERROR WILL REMAIN AND THE COMMAND WILL AUTOMATICALLY START MOVING SLOWLY
+    		Robot.DriveSubsystem.isClose = true;
+    	}
+    	if(Robot.DriveSubsystem.isClose){
+    		if(Math.signum(error) == -1 && Math.abs(error)>=100){
+    			Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, -minimumvoltage);
+    			Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, -minimumvoltage);
+    		}else if(Math.signum(error) == 1 && Math.abs(error)>=100){
+    			Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, minimumvoltage);
+    			Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, minimumvoltage);
+    		}else{
+    			Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, 0);
+    			Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, 0);
+    		}
+    	}
+    	//System.out.println(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0));
+    	inRange = Math.abs(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0) ) <= 200;
     	if(inRange){endTime = System.currentTimeMillis();}
     	else {startTime = System.currentTimeMillis();}
     }
@@ -133,7 +154,10 @@ public class AutoDriveCommand extends Command {
 
     // Called once after isFinished returns true
     @Override
-	protected void end() {  }
+	protected void end() {
+    	Robot.DriveSubsystem.isClose = false;
+	
+    }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run

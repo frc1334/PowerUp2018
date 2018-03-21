@@ -2,6 +2,8 @@ package org.usfirst.frc.team1334.robot;
 
 import org.usfirst.frc.team1334.robot.util.Xbox360Controller;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -26,5 +28,5 @@ public class OI {
 	public static double OelevateControl() { return Operator.getLeftYAxis();}
 	public static boolean OgetIntakeReverse () { return Operator.getButtonLB(); }
 	public static boolean OgetIntakeGO () { return Operator.getButtonRB(); }
-	
+	public static void RumbleOP (double Amount) { Operator.setRumble(RumbleType.kLeftRumble, Amount); Operator.setRumble(RumbleType.kRightRumble, Amount);}
 }

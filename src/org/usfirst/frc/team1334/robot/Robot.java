@@ -4,6 +4,7 @@ package org.usfirst.frc.team1334.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -26,19 +27,31 @@ import org.usfirst.frc.team1334.robot.commands.*;
  * project.
  */
 public class Robot extends IterativeRobot {
-
+	public static boolean isClose = false;
 	public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
 	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
 	public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
-	//public Subsystems subsystem = new Subsystems();
-	
+	public static int kCloseSwitchFwd = 148;
+	public static int kCloseSwitchApproach = 19;
+	public static int kOppSwitchForward = 288;
+	public static int kOppSwitchAcross = 227;
+	public static int kOppSwitchDown = 61;
+	public static int kOppSwitchBack = 16;
+	public static int kCloseScaleFwd = 253;
+	public static int kOppScaleFwd = 219;
+	public static int kOppScaleAcross = 227;
+	public static int kOppScaleApproach = 23;
+	public static int kSideBasline = 148;
+	public static int kCenterLeaveWall = 30;
+	public static int kCenterLeft = 65;
+	public static int kCenterRight = 55;
+	public static int kCenterApproach = 70;
+	String gameData;
 	public static OI oi;
-
 	Command autonomousCommand;
 	Command driveCommand = new DriveCommand();
-	SendableChooser<Command> chooser = new SendableChooser<>();
-
+	SendableChooser<String> chooser = new SendableChooser<>();
 	public boolean SwitchState;
 	public boolean ScaleState;
 	// true for right, false for left
@@ -55,27 +68,13 @@ public class Robot extends IterativeRobot {
 		//chooser.addDefault("Default program", new );
 		//chooser.addObject("Experimental Auto", new );
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		chooser.addDefault("Baseline", new Baseline());
-		if (SwitchState) { 
-			chooser.addObject("Left Switch", new LeftRightSwitch());
-			chooser.addObject("Center Switch", new CenterRightSwitch()); 
-			chooser.addObject("Right Switch", new RightSideSwitch());
-			}
-		else if (!SwitchState) { 
-			chooser.addObject("Left Switch", new LeftSideSwitch()); 
-			chooser.addObject("Center Switch", new CenterLeftSwitch());
-			chooser.addObject("Right Switch", new RightLeftSwitch());
-			}
-
-		if (ScaleState) { 
-			chooser.addObject("Right Start Scale", new RightScale()); 
-			chooser.addObject("Left Start Scale", new LeftRightScale());
-			}
-		if (!ScaleState) { 
-			chooser.addObject("Left Start Scale", new LeftScale()); 
-			chooser.addObject("Right Start Scale", new RightLeftScale());
-		}
-		
+		chooser.addDefault("CenterSwitch", "CenterSwitch");
+		chooser.addObject("CenterBase", "CenterBase");
+		chooser.addObject("RightScale", "RightScale");
+		chooser.addObject("RightSwitch", "RightSwitch");
+		chooser.addObject("LeftScale", "LeftScale");
+		chooser.addObject("LeftSwitch", "LeftSwitch");
+		chooser.addObject("Baseline", "Baseline");
 		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
@@ -110,7 +109,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		//autonomousCommand = chooser.getSelected();
 		Robot.DriveSubsystem.ResetGyroAngle();
-		autonomousCommand = new CenterLeftSwitch();
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -118,23 +117,7 @@ public class Robot extends IterativeRobot {
 		 * autonomousCommand = new DriveCommand(); break; }
 		 */
 		//String computation goes here
-		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		if(gameData.charAt(0) == 'L'){
-			//Put left auto code here
-			SwitchState = true;
-		}else if(gameData.charAt(0) == 'R'){
-			//Put right auto code here
-			SwitchState = false;
-		}
-		if(gameData.charAt(1) == 'L'){
-			ScaleState = true;
-		}else if(gameData.charAt(1) == 'R'){
-			ScaleState = false;
-		}
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null){
-			autonomousCommand.start();
-		}
+		
 	}
 
 	/**
@@ -142,6 +125,71 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		if(gameData!=null){
+			gameData = DriverStation.getInstance().getGameSpecificMessage();
+			if(gameData.charAt(0) == 'L'){
+				//Put left auto code here
+				SwitchState = true;
+			}else if(gameData.charAt(0) == 'R'){
+				//Put right auto code here
+				SwitchState = false;
+			}
+			if(gameData.charAt(1) == 'L'){
+				ScaleState = true;
+			}else if(gameData.charAt(1) == 'R'){
+				ScaleState = false;
+			}
+			// schedule the autonomous command (example)
+			String Selected = chooser.getSelected();
+			switch(Selected){
+			case "CenterSwitch":
+				if(SwitchState){
+					autonomousCommand = new CenterLeftSwitch();
+				}else{
+					autonomousCommand = new CenterRightSwitch();
+				}
+				break;
+			case "CenterBase":
+				autonomousCommand = new CenterBaseline();
+				break;
+			case "RightScale":
+				if(ScaleState){
+					autonomousCommand = new RightRightScale();
+				}else{
+					autonomousCommand = new RightLeftScale();
+				}
+				break;
+			case "RightSwitch":
+				if(SwitchState){
+					autonomousCommand = new RightLeftSwitch();
+				}else{
+					autonomousCommand = new RightRightSwitch();
+				}
+				break;
+			case "LeftScale":
+				if(ScaleState){
+					autonomousCommand = new LeftRightScale();
+				}else{
+					autonomousCommand = new LeftLeftScale();
+				}
+				break;
+			case "LeftSwitch":
+				if(SwitchState){
+					autonomousCommand = new LeftLeftSwitch();
+				}else{
+					autonomousCommand = new LeftRightSwitch();
+				}
+				break;
+			case "Baseline":
+				autonomousCommand = new Baseline();
+				break;
+			}
+			if(autonomousCommand!=null){
+				autonomousCommand.start();
+			}
+		}
+		//autonomousCommand
+		
 		Scheduler.getInstance().run();
 	}
 

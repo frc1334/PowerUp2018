@@ -56,7 +56,7 @@ public class ElevatorSubsystem extends Subsystem {
 	public DigitalInput HighWarn = new DigitalInput(RobotMap.highwarn);
 	boolean reversesensor = false;
 
-	public static DoubleSolenoid brock = new DoubleSolenoid (RobotMap.breakk1, RobotMap.breakk2);
+	
 	int elevatorposition = 1;
 	
 	public void intake (boolean inward, boolean outward) {
@@ -146,17 +146,7 @@ public class ElevatorSubsystem extends Subsystem {
 		}
 	}
 	
-	// test method for kforward and kreverse
-	public void elevTest (boolean active, boolean notactive){
-		if (active && !notactive){
-			brock.set(Value.kForward);
-			Elevator1.set(ControlMode.PercentOutput, 0);
-		}
-		else if (notactive && !active){
-			brock.set(Value.kReverse);
-			Elevator1.set(ControlMode.PercentOutput, 0);
-		}
-	}
+	
 	
     @Override
 	public void initDefaultCommand() {

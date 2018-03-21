@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class RightLeftScale extends CommandGroup {
+public class LeftLeftSwitch extends CommandGroup {
 
-    public RightLeftScale() {
+    public LeftLeftSwitch() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,13 +24,11 @@ public class RightLeftScale extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new ShooterAngle(5);
-    	addSequential(new AutoDriveCommand(Robot.kOppScaleFwd));
-    	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDriveCommand(Robot.kOppScaleAcross));
+    	//addParallel(new ShooterAngle(15));
+    	addSequential(new AutoDriveCommand(Robot.kCloseSwitchFwd));
     	addSequential(new GyroTurn(90));
-    	addSequential(new AutoDriveCommand(Robot.kOppScaleApproach));
-    	addSequential(new GyroTurn(38));
-    	//addSequential(new AutoShooterCommand(true));
+    	addSequential(new AutoDriveCommand(Robot.kCloseSwitchApproach));
+    	//addSequential(new AutoShooterCommand(false));
+    	
     }
 }

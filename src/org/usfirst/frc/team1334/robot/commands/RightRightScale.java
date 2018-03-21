@@ -1,13 +1,13 @@
 package org.usfirst.frc.team1334.robot.commands;
-
+import org.usfirst.frc.team1334.robot.Robot;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class RightScale extends CommandGroup {
+public class RightRightScale extends CommandGroup {
 
-    public RightScale() {
+    public RightRightScale() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,9 +24,9 @@ public class RightScale extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveCommand((int) 304.19));
-    	addParallel(new GyroTurn(-90));
-    	addSequential(new ElevatorCommand(2));
-    	addSequential(new IntakeCommand(0));
+    	//addParallel(new ShooterAngle(5));
+    	addSequential(new AutoDriveCommand(Robot.kCloseScaleFwd));
+    	addSequential(new GyroTurn(-39));
+    	//addSequential(new AutoShooterCommand(true));
     }
 }

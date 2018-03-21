@@ -5,18 +5,37 @@ import org.usfirst.frc.team1334.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class AutoShooterCommand extends Command{
+	double startTime,endTime;
+	boolean isHigh = false;
 	
-	int angle;
-	
-	public AutoShooterCommand(int angleInput){
-		angle = angleInput;
+	public AutoShooterCommand(boolean IsHigh){
 		requires(Robot.ShooterSubsystem);
+		isHigh = IsHigh;
 	}
-
+	@Override
+	protected void initialize(){
+		if(isHigh){
+			Robot.ShooterSubsystem.highGoal();
+		}else{
+			Robot.ShooterSubsystem.lowGoal();
+		}
+		startTime = System.currentTimeMillis();
+		endTime = System.currentTimeMillis();
+	}
+	protected void execute(){
+		endTime = System.currentTimeMillis();
+	}
 	@Override
 	protected boolean isFinished() {
-		// TODO Auto-generated method stub
+		if(endTime-startTime > 500){
+			return true;
+		}
 		return false;
 	}
-	
+	protected void end(){
+		
+	}
+	protected void interrupted(){
+		
+	}
 }

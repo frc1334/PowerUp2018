@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1334.robot.commands;
 
+import org.usfirst.frc.team1334.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,7 +26,7 @@ public class Baseline extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutoDriveCommand((int) 265.658));
+    	addSequential(new AutoDriveCommand(Robot.kSideBasline));
     	
     }
 }

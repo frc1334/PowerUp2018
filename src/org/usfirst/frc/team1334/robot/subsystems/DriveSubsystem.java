@@ -50,10 +50,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	static int b;
 	public AHRS ahrs;
 	public boolean isstill = true;
-	public float minimalvoltage = 0.15f;
+	public float minimalvoltage = 0.23f;
 	public double post = 0;
 	public double negt = 0;
-	
+	public boolean isClose = false;
 	public TalonSRX Left1 = new TalonSRX(RobotMap.Left1);
 	public TalonSRX Left2 = new TalonSRX(RobotMap.Left2);
 	public TalonSRX Right1 = new TalonSRX(RobotMap.Right1);
@@ -62,7 +62,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public static DoubleSolenoid gShift = new DoubleSolenoid(RobotMap.shift1, RobotMap.shift2);
 
 	public DriveSubsystem() {
-		super("Drive", 0.01,0.0,0,0);
+		super("Drive", 0.03,0.0,0,0);
 		super.getPIDController().setInputRange(-180.0f,  180.0f);
         super.getPIDController().setOutputRange(-1.0, 1.0);
         setAbsoluteTolerance(kToleranceDegrees);
@@ -92,7 +92,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	public void ArcadeDrive(double speed, double turn){
 		
 		TankDrive(-speed -turn, speed - turn);
-		
+		System.out.print(speed);
 		//System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
 		//System.out.println(Right1.getClosedLoopError(0));
 	}
@@ -148,15 +148,15 @@ public class DriveSubsystem extends PIDSubsystem {
 	@Override
 	public void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		if(output >=0.6 ){
-			rotateToAngleRate = 0.6;
-		}else if(output<=-0.6){
-			rotateToAngleRate = -0.6;
+		if(output >=0.5){
+			rotateToAngleRate = 0.5;
+		}else if(output<=-0.5){
+			rotateToAngleRate = -0.5;
 		}else{
 			rotateToAngleRate = output;
 		}
 		if(isstill){
-			if(this.getPIDController().getError()>=1 || this.getPIDController().getError()<=-1){
+			if(this.getPIDController().getError()>=2 || this.getPIDController().getError()<=-2){
 				if(rotateToAngleRate<= minimalvoltage && rotateToAngleRate > 0){
 					post +=1;
 					rotateToAngleRate = minimalvoltage - ((1-this.getPIDController().getError())/65)+post/100;

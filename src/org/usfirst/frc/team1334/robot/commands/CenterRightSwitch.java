@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1334.robot.commands;
 
+import org.usfirst.frc.team1334.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,12 +26,13 @@ public class CenterRightSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new AutoDriveCommand(12)); 
-    	addSequential(new ElevatorCommand(1));
+    	//addParallel(new ShooterAngle(15));
+    	addSequential(new AutoDriveCommand(Robot.kCenterLeaveWall));
     	addSequential(new GyroTurn(90));
-    	addSequential(new AutoDriveCommand((int) 30.51));
+    	addSequential(new AutoDriveCommand(Robot.kCenterRight));
     	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDriveCommand((int) 76.37));
-    	addSequential(new IntakeCommand(0));
+    	addSequential(new AutoDriveCommand(Robot.kCenterApproach));
+    	//addSequential(new AutoShooterCommand(IsLow));
+    	
     }
 }

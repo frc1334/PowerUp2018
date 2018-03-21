@@ -32,7 +32,7 @@ public class GyroTurn extends Command {
     	
     	Robot.DriveSubsystem.usePIDOutput(Robot.DriveSubsystem.getPIDController().get());
     	Robot.DriveSubsystem.ArcadeDrive(0, Robot.DriveSubsystem.rotateToAngleRate);
-    	if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 1 ){
+    	if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 2 ){
     		Start = System.currentTimeMillis();
     	}else{
     		End = System.currentTimeMillis();
