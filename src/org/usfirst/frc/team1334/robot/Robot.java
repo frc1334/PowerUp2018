@@ -34,8 +34,10 @@ public class Robot extends IterativeRobot {
 	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
 	public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
-	public static double kSwitchApproachSpeed = 0.4;
+	public static double kSwitchApproachSpeed = 0.4;//in percent output
 	public static double kCenterSwitchApproachTime = 1000;
+	public static double kSideSwitchApproachTime = 300;//in milliseconds
+	public static double kOppSideSwitchApproachTime = 300;
 	public static int kCloseSwitchFwd = 148;
 	public static int kCloseSwitchApproach = 19;
 	public static int kOppSwitchForward = 288;

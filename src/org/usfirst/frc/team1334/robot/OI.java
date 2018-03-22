@@ -19,15 +19,15 @@ public class OI {
 	public static boolean DgetHighGear() { return Driver.getButtonB(); }
 	public static boolean DgetLowGear() { return Driver.getButtonA(); }
 	public static boolean DclimbEngage () { return Driver.getButtonX(); }
-	public static boolean DclimbDisengage () { return Driver.getButtonY(); }
-	public static boolean DclimbSpinnyboiL () { return Driver.getButtonLB(); }
-	public static boolean DclimbSpinnyboiR () { return Driver.getButtonRB(); }
+	public static boolean OclimbSpinnyboiR () { return Operator.getButtonRB(); }
+	public static boolean DgetIntakeReverse () { return Driver.getButtonLB(); }
+	public static boolean DgetIntakeGO () { return Driver.getButtonRB(); }
 	
 	// Operator Controls
 	public static boolean OelevateBrake () { return Operator.getButtonX(); }
 	public static double OelevateControl() { return Operator.getLeftYAxis();}
-	public static boolean OgetIntakeReverse () { return Operator.getButtonLB(); }
-	public static boolean OgetIntakeGO () { return Operator.getButtonRB(); }
+	public static boolean DclimbDisengage () { return Driver.getButtonY(); }
+	public static boolean OclimbSpinnyboiL () { return Operator.getButtonLB(); }
 	public static boolean OHIGH() {return Operator.getButtonA();}
 	public static boolean OLOW() {return Operator.getButtonB();}
 	public static void RumbleOP (double Amount) { Operator.setRumble(RumbleType.kLeftRumble, Amount); Operator.setRumble(RumbleType.kRightRumble, Amount);}

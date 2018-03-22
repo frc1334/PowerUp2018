@@ -27,7 +27,8 @@ public class LeftLeftSwitch extends CommandGroup {
     	addParallel(new ShooterAngle(15));
     	addSequential(new AutoDriveCommand(Robot.kCloseSwitchFwd));
     	addSequential(new GyroTurn(90));
-    	addSequential(new AutoDriveCommand(Robot.kCloseSwitchApproach));
+    	//addSequential(new AutoDriveCommand(Robot.kCloseSwitchApproach));
+    	addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed, Robot.kSideSwitchApproachTime));
     	addSequential(new AutoShooterCommand(false));
     	
     }

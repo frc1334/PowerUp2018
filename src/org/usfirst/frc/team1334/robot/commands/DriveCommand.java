@@ -39,9 +39,9 @@ public class DriveCommand extends Command {
 		// This is the Elevator Brake Test for the Solenoids (arguments are temprorary because im lazy and didnt want to make buttons and stuff)
 		// i would swear in these but im apparently not allowed to ;-;
 		//Robot.ElevatorSubsystem.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
-		Robot.ShooterSubsystem.driveShooter(OI.OelevateControl());
+		Robot.ShooterSubsystem.driveShooter(-OI.OelevateControl());
 		Robot.ClimberSubsystem.solenoidInit(OI.DclimbEngage());
-		Robot.ClimberSubsystem.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
+		Robot.ClimberSubsystem.winch(OI.OclimbSpinnyboiL(), OI.OclimbSpinnyboiR());
 		if(OI.OHIGH()){
 			shootE = System.currentTimeMillis();
 			Robot.ShooterSubsystem.highGoal(shootE-shootS);
@@ -50,7 +50,7 @@ public class DriveCommand extends Command {
 			shootS = System.currentTimeMillis();
 		}else{
 			shootS = System.currentTimeMillis();
-			Robot.ShooterSubsystem.idle(OI.OgetIntakeGO(),OI.OgetIntakeReverse());
+			Robot.ShooterSubsystem.idle(OI.DgetIntakeGO(),OI.DgetIntakeReverse());
 		}
 		
 	}
