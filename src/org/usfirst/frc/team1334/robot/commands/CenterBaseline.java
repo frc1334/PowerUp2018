@@ -29,6 +29,7 @@ public class CenterBaseline extends CommandGroup {
     	addSequential(new GyroTurn(90));
     	addSequential(new AutoDriveCommand(Robot.kCenterRight));
     	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDriveCommand(Robot.kCenterApproach));
+    	//addSequential(new AutoDriveCommand(Robot.kCenterApproach));
+    	addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed, Robot.kCenterSwitchApproachTime));
     }
 }

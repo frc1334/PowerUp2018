@@ -33,17 +33,15 @@ public class RobotMap {
 	//the compressor uses another
 	public static final int Compressor = 0;
 	//and the PCM uses yet anoter set of IDS
-	public static final int eject1 = 0;
-	public static final int eject2 = 1;
+	public static final int eject1 = 2;
+	public static final int eject2 = 3;
 	
-	public static final int shift1 = 2;
-	public static final int shift2 = 3;
+	public static final int shift1 = 0;
+	public static final int shift2 = 1;
 
 	public static final int shooterP1_1 = 4;
 	public static final int shooterP1_2 = 5;
 
-	public static final int shooterP2_1 = 6;
-	public static final int shooterP2_2 = 7;
 	
 	
 	//Digital IO Ports

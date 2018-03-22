@@ -24,9 +24,9 @@ public class RightRightScale extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new ShooterAngle(5));
+    	addParallel(new ShooterAngle(5));
     	addSequential(new AutoDriveCommand(Robot.kCloseScaleFwd));
     	addSequential(new GyroTurn(-39));
-    	//addSequential(new AutoShooterCommand(true));
+    	addSequential(new AutoShooterCommand(true));
     }
 }

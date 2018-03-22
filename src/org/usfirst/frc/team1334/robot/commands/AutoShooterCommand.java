@@ -15,7 +15,7 @@ public class AutoShooterCommand extends Command{
 	@Override
 	protected void initialize(){
 		if(isHigh){
-			Robot.ShooterSubsystem.highGoal();
+			Robot.ShooterSubsystem.highGoal(1000);
 		}else{
 			Robot.ShooterSubsystem.lowGoal();
 		}
@@ -33,7 +33,7 @@ public class AutoShooterCommand extends Command{
 		return false;
 	}
 	protected void end(){
-		
+		Robot.ShooterSubsystem.idle(false, false);
 	}
 	protected void interrupted(){
 		

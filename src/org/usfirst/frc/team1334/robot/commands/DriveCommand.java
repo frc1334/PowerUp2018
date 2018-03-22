@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveCommand extends Command {
+	double shootS,shootE;
 	public DriveCommand() {
 		// Use requires() here to declare subsystem dependencies
 		requires(Robot.DriveSubsystem);
@@ -28,7 +29,7 @@ public class DriveCommand extends Command {
 		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
 		System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
 		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
-		Robot.ShooterSubsystem.intake(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
+		
 		//Robot.ElevatorSubsystem.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());
 		//Robot.ElevatorSubsystem.topElevator(Robot.ElevatorSubsystem.HighWarn.get());
 		
@@ -41,7 +42,17 @@ public class DriveCommand extends Command {
 		Robot.ShooterSubsystem.driveShooter(OI.OelevateControl());
 		Robot.ClimberSubsystem.solenoidInit(OI.DclimbEngage());
 		Robot.ClimberSubsystem.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
-
+		if(OI.OHIGH()){
+			shootE = System.currentTimeMillis();
+			Robot.ShooterSubsystem.highGoal(shootE-shootS);
+		}else if(OI.OLOW()){
+			Robot.ShooterSubsystem.lowGoal();
+			shootS = System.currentTimeMillis();
+		}else{
+			shootS = System.currentTimeMillis();
+			Robot.ShooterSubsystem.idle(OI.OgetIntakeGO(),OI.OgetIntakeReverse());
+		}
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

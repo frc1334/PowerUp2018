@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1334.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,11 +28,14 @@ import org.usfirst.frc.team1334.robot.commands.*;
  * project.
  */
 public class Robot extends IterativeRobot {
+	Compressor C = new Compressor(0);
 	public static boolean isClose = false;
 	public static final DriveSubsystem DriveSubsystem = new DriveSubsystem();
 	public static final ElevatorSubsystem ElevatorSubsystem = new ElevatorSubsystem();
 	public static final ShooterSubsystem ShooterSubsystem = new ShooterSubsystem();
 	public static final ClimberSubsystem ClimberSubsystem = new ClimberSubsystem();
+	public static double kSwitchApproachSpeed = 0.4;
+	public static double kCenterSwitchApproachTime = 1000;
 	public static int kCloseSwitchFwd = 148;
 	public static int kCloseSwitchApproach = 19;
 	public static int kOppSwitchForward = 288;
@@ -47,7 +51,7 @@ public class Robot extends IterativeRobot {
 	public static int kCenterLeft = 65;
 	public static int kCenterRight = 55;
 	public static int kCenterApproach = 70;
-	String gameData;
+	public static String gameData = " ";
 	public static OI oi;
 	Command autonomousCommand;
 	Command driveCommand = new DriveCommand();
@@ -63,7 +67,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		
+		C.setClosedLoopControl(true);
 		
 		//chooser.addDefault("Default program", new );
 		//chooser.addObject("Experimental Auto", new );
@@ -75,7 +79,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("LeftScale", "LeftScale");
 		chooser.addObject("LeftSwitch", "LeftSwitch");
 		chooser.addObject("Baseline", "Baseline");
-		
+		chooser.addObject("No Auto", "null");
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -86,12 +90,14 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		gameData = " ";
+		OI.RumbleOP(0);
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		gameData = " ";
 	}
 
 	/**
@@ -125,19 +131,25 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		if(gameData!=null){
+		
+		if(gameData==" "){
+			
 			gameData = DriverStation.getInstance().getGameSpecificMessage();
 			if(gameData.charAt(0) == 'L'){
 				//Put left auto code here
 				SwitchState = true;
+				System.out.println("LEFTSWITCH");
 			}else if(gameData.charAt(0) == 'R'){
 				//Put right auto code here
 				SwitchState = false;
+				System.out.println("RIGHTSWITCH");
 			}
 			if(gameData.charAt(1) == 'L'){
 				ScaleState = true;
+				System.out.println("LEFTSCALE");
 			}else if(gameData.charAt(1) == 'R'){
 				ScaleState = false;
+				System.out.println("RIGHTSCALE");
 			}
 			// schedule the autonomous command (example)
 			String Selected = chooser.getSelected();
@@ -145,43 +157,135 @@ public class Robot extends IterativeRobot {
 			case "CenterSwitch":
 				if(SwitchState){
 					autonomousCommand = new CenterLeftSwitch();
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					System.out.println("CLSw");
+					
 				}else{
 					autonomousCommand = new CenterRightSwitch();
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
+					System.out.println("CRSw");
 				}
 				break;
 			case "CenterBase":
 				autonomousCommand = new CenterBaseline();
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				System.out.println("CBaseline");
+				
 				break;
 			case "RightScale":
 				if(ScaleState){
-					autonomousCommand = new RightRightScale();
-				}else{
 					autonomousCommand = new RightLeftScale();
+					System.out.println("RLS");
+					System.out.println("RLS");
+					System.out.println("RLS");
+					System.out.println("RLS");
+					System.out.println("RLS");
+					System.out.println("RLS");
+					System.out.println("RLS");
+				}else{
+					autonomousCommand = new RightRightScale();
+					System.out.println("RRS");
+					System.out.println("RRS");
+					System.out.println("RRS");
+					System.out.println("RRS");
+					System.out.println("RRS");
+					System.out.println("RRS");
+					System.out.println("RRS");
 				}
 				break;
 			case "RightSwitch":
 				if(SwitchState){
 					autonomousCommand = new RightLeftSwitch();
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					System.out.println("RLSw");
+					
 				}else{
 					autonomousCommand = new RightRightSwitch();
+					System.out.println("RRSw");
+					System.out.println("RRSw");
+					System.out.println("RRSw");
+					System.out.println("RRSw");
+					System.out.println("RRSw");
+					System.out.println("RRSw");
+					
 				}
 				break;
 			case "LeftScale":
 				if(ScaleState){
-					autonomousCommand = new LeftRightScale();
-				}else{
 					autonomousCommand = new LeftLeftScale();
+					System.out.println("LLS");
+					System.out.println("LLS");
+					System.out.println("LLS");
+					System.out.println("LLS");
+					System.out.println("LLS");
+					System.out.println("LLS");
+					System.out.println("LLS");
+					
+				}else{
+					autonomousCommand = new LeftRightScale();
+					System.out.println("LRS");
+					System.out.println("LRS");
+					System.out.println("LRS");
+					System.out.println("LRS");
+					System.out.println("LRS");
+					System.out.println("LRS");
+					System.out.println("LRS");
+					
 				}
 				break;
 			case "LeftSwitch":
 				if(SwitchState){
 					autonomousCommand = new LeftLeftSwitch();
+					System.out.println("LLSw");
+					System.out.println("LLSw");
+					System.out.println("LLSw");
+					System.out.println("LLSw");
+					System.out.println("LLSw");
+					System.out.println("LLSw");
+					System.out.println("LLSw");
 				}else{
 					autonomousCommand = new LeftRightSwitch();
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
+					System.out.println("LRSw");
 				}
 				break;
 			case "Baseline":
 				autonomousCommand = new Baseline();
+				System.out.println("Baseline");
+				System.out.println("Baseline");
+				System.out.println("Baseline");
+				System.out.println("Baseline");
+				System.out.println("Baseline");
+				System.out.println("Baseline");
+				System.out.println("Baseline");
 				break;
 			}
 			if(autonomousCommand!=null){
@@ -199,6 +303,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		gameData = " ";
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		driveCommand.start();

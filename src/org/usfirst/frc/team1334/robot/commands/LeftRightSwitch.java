@@ -24,7 +24,7 @@ public class LeftRightSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new ShooterAngle(15));
+    	addParallel(new ShooterAngle(15));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchForward));
     	addSequential(new GyroTurn(90));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchAcross));
@@ -32,6 +32,6 @@ public class LeftRightSwitch extends CommandGroup {
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchDown));
     	addSequential(new GyroTurn(90));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchBack));
-    	//addSequential(new AutoShooterCommand(false));
+    	addSequential(new AutoShooterCommand(false));
     }
 }

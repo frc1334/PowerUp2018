@@ -2,6 +2,8 @@ package org.usfirst.frc.team1334.robot.commands;
 
 import org.usfirst.frc.team1334.robot.Robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -24,6 +26,7 @@ public class GyroTurn extends Command {
     	Robot.DriveSubsystem.Left2.setInverted(false);
     	Start = System.currentTimeMillis();
     	End = System.currentTimeMillis();
+    	Robot.DriveSubsystem.shiftGear(false, true);
     	Robot.DriveSubsystem.setSetpoint(Robot.DriveSubsystem.GyroDrive(Angle));
     }
 
@@ -50,6 +53,8 @@ public class GyroTurn extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, 0);
+    	Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, 0);
     }
 
     // Called when another command which requires one or more of the same

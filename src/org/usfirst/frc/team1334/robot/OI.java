@@ -28,5 +28,7 @@ public class OI {
 	public static double OelevateControl() { return Operator.getLeftYAxis();}
 	public static boolean OgetIntakeReverse () { return Operator.getButtonLB(); }
 	public static boolean OgetIntakeGO () { return Operator.getButtonRB(); }
+	public static boolean OHIGH() {return Operator.getButtonA();}
+	public static boolean OLOW() {return Operator.getButtonB();}
 	public static void RumbleOP (double Amount) { Operator.setRumble(RumbleType.kLeftRumble, Amount); Operator.setRumble(RumbleType.kRightRumble, Amount);}
 }

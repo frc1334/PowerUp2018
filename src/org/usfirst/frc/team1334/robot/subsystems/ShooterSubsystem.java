@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class ShooterSubsystem extends Subsystem{
 	
@@ -17,17 +18,17 @@ public class ShooterSubsystem extends Subsystem{
 	public TalonSRX Intake2 = new TalonSRX (RobotMap.Intake2);
 	public TalonSRX Shooter = new TalonSRX (RobotMap.Shooter1);
 	public boolean zeroed;
-	public DoubleSolenoid Piston1 = new DoubleSolenoid (RobotMap.shooterP1_1, RobotMap.shooterP1_2);
-	public DoubleSolenoid Piston2 = new DoubleSolenoid (RobotMap.shooterP2_1, RobotMap.shooterP2_2);
+	public Solenoid Piston1 = new Solenoid (RobotMap.shooterP1_1);
+	public Solenoid Piston2 = new Solenoid (RobotMap.shooterP1_2);
 	
 	public void intake (boolean inward, boolean outward) {
 		// Intake System
 		if (inward && !outward){
-			Intake1.set(ControlMode.PercentOutput, 1);
-			Intake2.set(ControlMode.PercentOutput, -1);
+			Intake1.set(ControlMode.PercentOutput, -0.6);
+			Intake2.set(ControlMode.PercentOutput, -0.6);
 		}
 		else if (outward && !inward){
-			Intake1.set(ControlMode.PercentOutput, -1);
+			Intake1.set(ControlMode.PercentOutput, 1);
 			Intake2.set(ControlMode.PercentOutput, 1);
 		}
 		else {
@@ -61,10 +62,15 @@ public class ShooterSubsystem extends Subsystem{
 		System.out.println(Shooter.getMotorOutputPercent() + "Speed");
 	}
 	
-	public void highGoal () {
-		intake(false,true);
-		Piston1.set(Value.kForward);
-		Piston2.set(Value.kForward);
+	public void highGoal (double delta) {
+
+		Piston1.set(true);
+		Piston2.set(true);
+		if(delta>10){
+			intake(false,true);
+		}
+		
+		
 	}
 	
 	public void lowGoal () {
@@ -79,6 +85,12 @@ public class ShooterSubsystem extends Subsystem{
 				zeroed = true;
 			}
 		}
+	}
+	
+	public void idle(boolean intake1, boolean intake2){
+		Piston1.set(false);
+		Piston2.set(false);
+		intake(intake1,intake2);
 	}
 	
 	@Override

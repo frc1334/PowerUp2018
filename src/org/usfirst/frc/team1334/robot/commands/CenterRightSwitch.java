@@ -26,13 +26,14 @@ public class CenterRightSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new ShooterAngle(15));
+    	addParallel(new ShooterAngle(15));
     	addSequential(new AutoDriveCommand(Robot.kCenterLeaveWall));
     	addSequential(new GyroTurn(90));
     	addSequential(new AutoDriveCommand(Robot.kCenterRight));
     	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDriveCommand(Robot.kCenterApproach));
-    	//addSequential(new AutoShooterCommand(IsLow));
+    	//addSequential(new AutoDriveCommand(Robot.kCenterApproach));
+    	addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed, Robot.kCenterSwitchApproachTime));
+    	addSequential(new AutoShooterCommand(false));
     	
     }
 }

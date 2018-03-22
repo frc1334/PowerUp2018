@@ -24,10 +24,10 @@ public class RightRightSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//addParallel(new ShooterAngle(15));
+    	addParallel(new ShooterAngle(15));
     	addSequential(new AutoDriveCommand(Robot.kCloseSwitchFwd));
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand(Robot.kCloseSwitchApproach));
-    	//addSequential(new AutoShooterCommand(false));
+    	addSequential(new AutoShooterCommand(false));
     }
 }

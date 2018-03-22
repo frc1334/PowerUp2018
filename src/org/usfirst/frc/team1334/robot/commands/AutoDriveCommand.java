@@ -111,8 +111,9 @@ public class AutoDriveCommand extends Command {
 		Robot.DriveSubsystem.Left1.setSelectedSensorPosition(absolutePosition, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.setSelectedSensorPosition(absolutePosition2, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		//distance to ticks conversion if 128codes/rev
-		ticks = distance* 79.3524416136*4;
+		ticks = distance* 79.3524416136*2;
 		System.out.println(ticks +" distance " + distance);
+		Robot.DriveSubsystem.shiftGear(true, false);
     	Robot.DriveSubsystem.Left1.set(ControlMode.MotionMagic, ticks);
     	Robot.DriveSubsystem.Right1.set(ControlMode.MotionMagic, ticks);
     	
@@ -156,7 +157,8 @@ public class AutoDriveCommand extends Command {
     @Override
 	protected void end() {
     	Robot.DriveSubsystem.isClose = false;
-	
+    	Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, 0);
+    	Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, 0);
     }
 
     // Called when another command which requires one or more of the same

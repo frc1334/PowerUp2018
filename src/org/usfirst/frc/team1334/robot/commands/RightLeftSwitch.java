@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class RightLeftSwitch extends CommandGroup{
 	
 	public RightLeftSwitch(){
-		//addParallel(new ShooterAngle(15));
+		addParallel(new ShooterAngle(15));
 		addSequential(new AutoDriveCommand(Robot.kOppSwitchForward));
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchAcross));
@@ -13,7 +13,7 @@ public class RightLeftSwitch extends CommandGroup{
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchDown));
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchBack));
-    	//addSequential(new AutoShooterCommand(false));
+    	addSequential(new AutoShooterCommand(false));
 	}
 	
 }
