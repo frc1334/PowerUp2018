@@ -21,7 +21,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	
 	
 	public int kSlotIdx = 0;
-
+	public double maxGyro = .5;
 	/*
 	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
 	 * now we just want the primary one.
@@ -50,7 +50,7 @@ public class DriveSubsystem extends PIDSubsystem {
 	static int b;
 	public AHRS ahrs;
 	public boolean isstill = true;
-	public float minimalvoltage = 0.23f;
+	public float minimalvoltage = 0.25f;
 	public double post = 0;
 	public double negt = 0;
 	public boolean isClose = false;
@@ -89,8 +89,12 @@ public class DriveSubsystem extends PIDSubsystem {
 		Right2.set(ControlMode.PercentOutput, right);
 	}
 
-	public void ArcadeDrive(double speed, double turn){
-		
+	public void ArcadeDrive(double speed, double turn, boolean slow){
+		if (slow){
+			turn *= .6;
+			speed *= .6;
+		}
+		System.out.println(turn);
 		TankDrive(-speed -turn, speed - turn);
 		System.out.print(speed);
 		//System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
@@ -148,10 +152,10 @@ public class DriveSubsystem extends PIDSubsystem {
 	@Override
 	public void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		if(output >=0.5){
-			rotateToAngleRate = 0.5;
-		}else if(output<=-0.5){
-			rotateToAngleRate = -0.5;
+		if(output >=maxGyro){
+			rotateToAngleRate = maxGyro;
+		}else if(output<=-maxGyro){
+			rotateToAngleRate = -maxGyro;
 		}else{
 			rotateToAngleRate = output;
 		}

@@ -16,6 +16,9 @@ public class AutoSpeedCommand extends Command {
     public AutoSpeedCommand(double Speed, double Time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	Robot.DriveSubsystem.shiftGear(false, true);
+    	Robot.DriveSubsystem.Left1.setInverted(false);
+    	Robot.DriveSubsystem.Left2.setInverted(false);
     	speed = Speed;
     	time = Time;
     }
@@ -48,6 +51,7 @@ public class AutoSpeedCommand extends Command {
     protected void end() {
     	Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput,0);
     	Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput,0);
+    	System.out.println("Finished");
     	
     }
 

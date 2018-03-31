@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1334.robot.commands;
 
+import org.usfirst.frc.team1334.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -9,9 +11,8 @@ public class TestForward extends CommandGroup {
 
     public TestForward() {
     	addSequential(new AutoDriveCommand(12));
-    	addSequential(new AutoDriveCommand(12));
-    	addSequential(new AutoDriveCommand(12));
-    	addSequential(new AutoDriveCommand(12));
+    	addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed,200));
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

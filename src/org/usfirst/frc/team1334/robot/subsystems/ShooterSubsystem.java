@@ -1,15 +1,12 @@
 package org.usfirst.frc.team1334.robot.subsystems;
 
 import org.usfirst.frc.team1334.robot.OI;
-import org.usfirst.frc.team1334.robot.Robot;
 import org.usfirst.frc.team1334.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class ShooterSubsystem extends Subsystem{
@@ -24,8 +21,8 @@ public class ShooterSubsystem extends Subsystem{
 	public void intake (boolean inward, boolean outward) {
 		// Intake System
 		if (inward && !outward){
-			Intake1.set(ControlMode.PercentOutput, -0.6);
-			Intake2.set(ControlMode.PercentOutput, -0.6);
+			Intake1.set(ControlMode.PercentOutput, -0.5);
+			Intake2.set(ControlMode.PercentOutput, -0.5);
 		}
 		else if (outward && !inward){
 			Intake1.set(ControlMode.PercentOutput, 1);

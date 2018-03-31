@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team1334.robot.commands;
 
 import org.usfirst.frc.team1334.robot.OI;
@@ -26,7 +27,7 @@ public class DriveCommand extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer());
+		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer(), OI.DslowSpeed());
 		System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
 		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
 		
@@ -41,7 +42,7 @@ public class DriveCommand extends Command {
 		//Robot.ElevatorSubsystem.elevTest(OI.OgetIntakeGO(), OI.OgetIntakeReverse());
 		Robot.ShooterSubsystem.driveShooter(-OI.OelevateControl());
 		Robot.ClimberSubsystem.solenoidInit(OI.DclimbEngage());
-		Robot.ClimberSubsystem.winch(OI.OclimbSpinnyboiL(), OI.OclimbSpinnyboiR());
+		Robot.ClimberSubsystem.winch(OI.DclimbSpinnyboiL(), OI.DclimbSpinnyboiR());
 		if(OI.OHIGH()){
 			shootE = System.currentTimeMillis();
 			Robot.ShooterSubsystem.highGoal(shootE-shootS);
@@ -50,7 +51,7 @@ public class DriveCommand extends Command {
 			shootS = System.currentTimeMillis();
 		}else{
 			shootS = System.currentTimeMillis();
-			Robot.ShooterSubsystem.idle(OI.DgetIntakeGO(),OI.DgetIntakeReverse());
+			Robot.ShooterSubsystem.idle(OI.OgetIntakeGO(),OI.OgetIntakeReverse());
 		}
 		
 	}

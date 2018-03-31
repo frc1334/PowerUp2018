@@ -20,13 +20,13 @@ public class RobotMap {
 	public static final int Right2 = 3;
 	
 	public static final int Intake1 = 4;
-	public static final int Intake2 = 5;
+	public static final int Intake2 = 7; // talon reassigned to 7 from 5 (working talon)
 	
 	public static final int Elevator1 = 6; 
 	public static final int Elevator2 = 7;
 	
 	public static final int Shooter1 = 6;
-	public static final int Shooter2 = 7;
+	public static final int Shooter2 = 11; // broken talon reassigned to unused value (broken [Reassigned from 7 to 11])
 	
 	public static final int Climb1 = 8;
 	public static final int Climb2 = 9;

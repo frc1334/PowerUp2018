@@ -28,10 +28,10 @@ public class IntakeCommand extends Command {
     	switch (spin)
     	{
     		case 0:
-      		Robot.ElevatorSubsystem.intake(true, false);
+      		Robot.ShooterSubsystem.intake(true, false);
       		break;
     		case 1:
-    		Robot.ElevatorSubsystem.intake(false, true);
+    		Robot.ShooterSubsystem.intake(false, true);
     		break;
     	}
     }

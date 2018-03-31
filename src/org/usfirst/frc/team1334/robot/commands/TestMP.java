@@ -1,13 +1,13 @@
 package org.usfirst.frc.team1334.robot.commands;
-import org.usfirst.frc.team1334.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class CenterLeftSwitch extends CommandGroup {
+public class TestMP extends CommandGroup {
 
-    public CenterLeftSwitch() {
+    public TestMP() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,13 +24,6 @@ public class CenterLeftSwitch extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addParallel(new ShooterAngle(15));
-    	addSequential(new AutoDriveCommand(Robot.kCenterLeaveWall));
-    	addSequential(new GyroTurn(-90));
-    	addSequential(new AutoDriveCommand(Robot.kCenterLeft));
-    	addSequential(new GyroTurn(90));
-    	addSequential(new AutoDriveCommand(Robot.kCenterApproach));
-    	//addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed, Robot.kCenterSwitchApproachTime));
-    	addSequential(new AutoShooterCommand(false));
+    	addSequential(new FollowMotionProfile("/home/lvuser/Slowcircle_left.csv","/home/lvuser/Slowcircle_right.csv","Circletest"));
     }
 }

@@ -11,6 +11,7 @@ public class AutoShooterCommand extends Command{
 	public AutoShooterCommand(boolean IsHigh){
 		requires(Robot.ShooterSubsystem);
 		isHigh = IsHigh;
+		// false = Low Goal, true = High Goal
 	}
 	@Override
 	protected void initialize(){

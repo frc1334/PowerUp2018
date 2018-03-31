@@ -1,12 +1,11 @@
 package org.usfirst.frc.team1334.robot.commands;
 
 import org.usfirst.frc.team1334.robot.Robot;
+import org.usfirst.frc.team1334.robot.subsystems.DriveSubsystem;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -18,7 +17,7 @@ public class AutoDriveCommand extends Command {
 	long startTime, endTime;
 	boolean inRange = false;
 	double ticks;
-	
+	public static double inchestoticks =  79.3524416136*4;
 	double error;
 	double minimumvoltage = 0.13;
     public AutoDriveCommand(int Distance) {
@@ -34,7 +33,7 @@ public class AutoDriveCommand extends Command {
 
     	endTime = System.currentTimeMillis();
     	startTime = System.currentTimeMillis();
-    	Robot.DriveSubsystem.gShift.set(Value.kForward);
+    	DriveSubsystem.gShift.set(Value.kForward);
     	/* choose the sensor and sensor direction */
     	
 		Robot.DriveSubsystem.Left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Robot.DriveSubsystem.kPIDLoopIdx,
@@ -47,9 +46,9 @@ public class AutoDriveCommand extends Command {
 		Robot.DriveSubsystem.Right1.setSensorPhase(false);
 		/* choose based on what direction you want forward/positive to be.
 		 * This does not affect sensor phase. */ 
-		Robot.DriveSubsystem.Left1.setInverted(!Robot.DriveSubsystem.kMotorInvert);
-		Robot.DriveSubsystem.Right1.setInverted(Robot.DriveSubsystem.kMotorInvert);
-		
+
+		Robot.DriveSubsystem.Left1.configMotionProfileTrajectoryPeriod(10, 10);
+		Robot.DriveSubsystem.Right1.configMotionProfileTrajectoryPeriod(10, 10);
 		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,Robot.DriveSubsystem.kTimeoutMs);
@@ -111,7 +110,7 @@ public class AutoDriveCommand extends Command {
 		Robot.DriveSubsystem.Left1.setSelectedSensorPosition(absolutePosition, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.setSelectedSensorPosition(absolutePosition2, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		//distance to ticks conversion if 128codes/rev
-		ticks = distance* 79.3524416136*2;
+		ticks = distance* inchestoticks;
 		System.out.println(ticks +" distance " + distance);
 		Robot.DriveSubsystem.shiftGear(true, false);
     	Robot.DriveSubsystem.Left1.set(ControlMode.MotionMagic, ticks);
