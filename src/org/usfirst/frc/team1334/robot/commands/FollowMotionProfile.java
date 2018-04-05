@@ -8,6 +8,7 @@ import org.usfirst.frc.team1334.robot.subsystems.DriveSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
@@ -42,21 +43,29 @@ public class FollowMotionProfile extends Command {
 		Robot.DriveSubsystem.Right1.configPeakOutputForward(1, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.configPeakOutputReverse(-1, Robot.DriveSubsystem.kTimeoutMs);
     	Robot.DriveSubsystem.Left1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//Do not put the acceleration above 2500 units/s^2 otherwise the robot veers
+		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 6, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.00, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.06, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_IntegralZone(Robot.DriveSubsystem.kPIDLoopIdx, 200,Robot.DriveSubsystem.kTimeoutMs);
+		//Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
+		//Robot.DriveSubsystem.Left1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//Do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Right1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//do not put the acceleration above 2500 units/s^2 otherwise the robot veers
+		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 6, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.00, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.06, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_IntegralZone(Robot.DriveSubsystem.kPIDLoopIdx, 200, Robot.DriveSubsystem.kTimeoutMs);
+		//Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
+		//Robot.DriveSubsystem.Right1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Left2.set(ControlMode.Follower, 0);
 		Robot.DriveSubsystem.Right2.set(ControlMode.Follower, 2);
 		Robot.DriveSubsystem.Left1.setInverted(true);
 		Robot.DriveSubsystem.Left2.setInverted(true);
+		Robot.DriveSubsystem.Left1.configMotionProfileTrajectoryPeriod(10, 10);
+		Robot.DriveSubsystem.Right1.configMotionProfileTrajectoryPeriod(10, 10);
+		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,10);
+		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,10);
+		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,10);
+		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,10);
 		
     }
 
@@ -93,7 +102,10 @@ public class FollowMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if(H.Lstatus.isLast && H.Rstatus.isLast && end-start>200)
+    	System.out.println("Motion Profile Complete");
         return H.Lstatus.isLast && H.Rstatus.isLast && end-start>200;
+        
     }
 
     // Called once after isFinished returns true

@@ -98,6 +98,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("No Auto", "null");
 		chooser.addObject("Delay Baseline", "DelayBase");
 		chooser.addObject("Test MP", "Motion");
+		chooser.addObject("Motion Profile Center Switch", "CenterSwitch_MP");
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -279,6 +280,13 @@ public class Robot extends IterativeRobot {
 				break;
 			case "Motion":
 				autonomousCommand = new TestMP();
+				break;
+			case "CenterSwitch_MP":
+				if(SwitchState){
+					autonomousCommand = new CenterLeftSwitch_MP();
+				}else{
+					autonomousCommand = new CenterRightSwitch_MP();
+				}
 				break;
 			}
 			

@@ -64,7 +64,7 @@ public class ProfileHandler {
 				Lpoint.addElement(Double.parseDouble(Lsplits[1]));//velocity
 				Lpoint.addElement(Double.parseDouble(Lsplits[2]));//time
 				LMotionProfile.addElement(Lpoint);
-				String[] Rsplits = Lline.split(", ");
+				String[] Rsplits = Rline.split(", ");
 				Vector<Double> Rpoint = new Vector<Double>();
 				Rpoint.addElement(Double.parseDouble(Rsplits[0]));//distance
 				Rpoint.addElement(Double.parseDouble(Rsplits[1]));//velocity
@@ -91,6 +91,8 @@ public class ProfileHandler {
 	public void startFilling() throws InterruptedException{
 		Robot.DriveSubsystem.Left1.clearMotionProfileHasUnderrun(0);
 		Robot.DriveSubsystem.Right1.clearMotionProfileHasUnderrun(0);
+		Robot.DriveSubsystem.Left1.configMotionProfileTrajectoryPeriod(0, 10);
+		Robot.DriveSubsystem.Right1.configMotionProfileTrajectoryPeriod(0, 10);
 		TrajectoryPoint Lpoint = new TrajectoryPoint();
 		TrajectoryPoint Rpoint = new TrajectoryPoint();
 		for(int i = 0; i < LMotionProfile.size();i++){
@@ -129,7 +131,13 @@ public class ProfileHandler {
 	}
 	
 	public void HandleMP() throws InterruptedException{
-		System.out.println(RMotionProfile.isEmpty() + "isempty");
+		//System.out.println(RMotionProfile.isEmpty() + "isempty");
+		if(Rstatus.isUnderrun){
+			System.out.println("RightMP Underrun");
+		}
+		if(Lstatus.isUnderrun){
+			System.out.println("LeftMP Underrun");
+		}
 		if(looptimeout < 0){
 			
 		}else{

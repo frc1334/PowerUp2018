@@ -17,7 +17,7 @@ public class AutoDriveCommand extends Command {
 	long startTime, endTime;
 	boolean inRange = false;
 	double ticks;
-	public static double inchestoticks =  79.3524416136*4;
+	public static double inchestoticks =  3.43774677003357 * 1024 / 12 / 2;
 	double error;
 	double minimumvoltage = 0.13;
     public AutoDriveCommand(int Distance) {
@@ -47,8 +47,7 @@ public class AutoDriveCommand extends Command {
 		/* choose based on what direction you want forward/positive to be.
 		 * This does not affect sensor phase. */ 
 
-		Robot.DriveSubsystem.Left1.configMotionProfileTrajectoryPeriod(10, 10);
-		Robot.DriveSubsystem.Right1.configMotionProfileTrajectoryPeriod(10, 10);
+
 		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,Robot.DriveSubsystem.kTimeoutMs);
@@ -72,13 +71,13 @@ public class AutoDriveCommand extends Command {
 
 		/* set closed loop gains in slot0, typically kF stays zero. */
 		Robot.DriveSubsystem.Left1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.6, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//Do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Right1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.45, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.6, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);

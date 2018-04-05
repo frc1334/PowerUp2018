@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class TestMP extends CommandGroup {
+public class CenterRightSwitch_MP extends CommandGroup {
 
-    public TestMP() {
+    public CenterRightSwitch_MP() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -24,8 +24,8 @@ public class TestMP extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	//Center left switch testcurve_left.csv
-    	//Center right switch : Dank_left.csv
-    	addSequential(new FollowMotionProfile("/home/lvuser/Dank_left.csv","/home/lvuser/Dank_right.csv","TestMotProf"));
+    	addParallel(new ShooterAngle(15));
+    	addSequential(new FollowMotionProfile("/home/lvuser/Center-Right Switch_left.csv","/home/lvuser/Center-Right Switch_right.csv","CenterRightSwitchMotProf"));
+    	addSequential(new AutoShooterCommand(false));
     }
 }
