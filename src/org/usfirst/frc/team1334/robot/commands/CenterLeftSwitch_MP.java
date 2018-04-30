@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1334.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+import org.usfirst.frc.team1334.robot.Motfilepaths;
 /**
  *
  */
@@ -24,8 +24,9 @@ public class CenterLeftSwitch_MP extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	addSequential(new Shooteroff());
     	addParallel(new ShooterAngle(15));
-    	addSequential(new FollowMotionProfile("/home/lvuser/testcurve_left.csv","/home/lvuser/testcurve_right.csv","CenterLeftSwitchMotProf"));
-    	addSequential(new AutoShooterCommand(false));
+    	addSequential(new FollowMotionProfile(Motfilepaths.CLSw_l,Motfilepaths.CLSw_r,"CenterLeftSwitchMotProf"));
+    	addSequential(new AutoShooterCommand(false,10));
     }
 }

@@ -7,33 +7,37 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutoShooterCommand extends Command{
 	double startTime,endTime;
 	boolean isHigh = false;
-	
-	public AutoShooterCommand(boolean IsHigh){
-		requires(Robot.ShooterSubsystem);
+	double duration;
+	public AutoShooterCommand(boolean IsHigh, double Duration){
+		duration = Duration;
 		isHigh = IsHigh;
 		// false = Low Goal, true = High Goal
 	}
 	@Override
 	protected void initialize(){
-		if(isHigh){
-			Robot.ShooterSubsystem.highGoal(1000);
-		}else{
-			Robot.ShooterSubsystem.lowGoal();
-		}
+		
 		startTime = System.currentTimeMillis();
 		endTime = System.currentTimeMillis();
 	}
 	protected void execute(){
 		endTime = System.currentTimeMillis();
+		if(endTime-startTime > duration && endTime-startTime < duration+500){
+			if(isHigh){
+				Robot.ShooterSubsystem.highGoal(1000);
+			}else{
+				Robot.ShooterSubsystem.lowGoal();
+			}
+		}
+		if(endTime-startTime > duration+500){
+			Robot.ShooterSubsystem.idle(false, false);
+		}
 	}
 	@Override
 	protected boolean isFinished() {
-		if(endTime-startTime > 500){
-			return true;
-		}
-		return false;
+		return endTime-startTime>duration+500;
 	}
 	protected void end(){
+		System.out.println("shootercommandend");
 		Robot.ShooterSubsystem.idle(false, false);
 	}
 	protected void interrupted(){

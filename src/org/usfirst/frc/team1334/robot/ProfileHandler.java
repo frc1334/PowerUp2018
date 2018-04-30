@@ -21,6 +21,7 @@ public class ProfileHandler {
 			Robot.DriveSubsystem.Right1.processMotionProfileBuffer();
 		}
 	}
+	public boolean isover = false;
 	public SetValueMotionProfile Set = SetValueMotionProfile.Disable;
 	public MotionProfileStatus Rstatus = new MotionProfileStatus();
 	public MotionProfileStatus Lstatus = new MotionProfileStatus();
@@ -42,7 +43,7 @@ public class ProfileHandler {
 			Lbr = new BufferedReader(new FileReader(LeftFilePath));
 			Rbr = new BufferedReader(new FileReader(RightFilePath));
 		}catch(IOException E){
-			System.out.println("File not Found");
+			//System.out.println("File not Found");
 			
 		}
 		
@@ -55,7 +56,7 @@ public class ProfileHandler {
 				Rline = 
 						Rbr.readLine();
 			}catch(IOException E){
-				System.out.println("Read Failed");
+				//System.out.println("Read Failed");
 			}
 			if(Lline!=null && Rline != null){
 				String[] Lsplits = Lline.split(", ");
@@ -131,12 +132,12 @@ public class ProfileHandler {
 	}
 	
 	public void HandleMP() throws InterruptedException{
-		//System.out.println(RMotionProfile.isEmpty() + "isempty");
+		////System.out.println(RMotionProfile.isEmpty() + "isempty");
 		if(Rstatus.isUnderrun){
-			System.out.println("RightMP Underrun");
+			//System.out.println("RightMP Underrun");
 		}
 		if(Lstatus.isUnderrun){
-			System.out.println("LeftMP Underrun");
+			//System.out.println("LeftMP Underrun");
 		}
 		if(looptimeout < 0){
 			
@@ -174,14 +175,15 @@ public class ProfileHandler {
 					Set = SetValueMotionProfile.Hold;
 					state = 0;
 					looptimeout = -1;
+					isover = true;
 				}
 				
 			}
 		}
 		Robot.DriveSubsystem.Right1.getMotionProfileStatus(Rstatus);
 		Robot.DriveSubsystem.Left1.getMotionProfileStatus(Lstatus);
-		System.out.println("MLeft " + "Stat: "+ Lstatus + "Dist: " + Math.round(Robot.DriveSubsystem.Left1.getActiveTrajectoryPosition() * 100)/100 + "Vel: "+ Math.round(Robot.DriveSubsystem.Left1.getActiveTrajectoryVelocity()*100)/100);
-		System.out.println("MRight " + "Stat: "+ Rstatus + "Dist: " + Math.round(Robot.DriveSubsystem.Right1.getActiveTrajectoryPosition() * 100)/100 + "Vel: "+ Math.round(Robot.DriveSubsystem.Right1.getActiveTrajectoryVelocity()*100)/100);
+		//System.out.println("MLeft " + "Stat: "+ Lstatus + "Dist: " + Math.round(Robot.DriveSubsystem.Left1.getActiveTrajectoryPosition() * 100)/100 + "Vel: "+ Math.round(Robot.DriveSubsystem.Left1.getActiveTrajectoryVelocity()*100)/100);
+		//System.out.println("MRight " + "Stat: "+ Rstatus + "Dist: " + Math.round(Robot.DriveSubsystem.Right1.getActiveTrajectoryPosition() * 100)/100 + "Vel: "+ Math.round(Robot.DriveSubsystem.Right1.getActiveTrajectoryVelocity()*100)/100);
 	}
 	
 }

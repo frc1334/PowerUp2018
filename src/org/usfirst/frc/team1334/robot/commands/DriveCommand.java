@@ -28,7 +28,7 @@ public class DriveCommand extends Command {
 	@Override
 	protected void execute() {
 		Robot.DriveSubsystem.ArcadeDrive(OI.DgetDriverSpeed(), OI.DgetSteer(), OI.DslowSpeed());
-		System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
+		//System.out.println(Robot.DriveSubsystem.Right1.getSelectedSensorVelocity(0)+ "LeftV");
 		Robot.DriveSubsystem.shiftGear(OI.DgetHighGear(),OI.DgetLowGear());
 		
 		//Robot.ElevatorSubsystem.resetElevator(Robot.ElevatorSubsystem.LowWarn.get());

@@ -99,6 +99,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Delay Baseline", "DelayBase");
 		chooser.addObject("Test MP", "Motion");
 		chooser.addObject("Motion Profile Center Switch", "CenterSwitch_MP");
+		
 		SmartDashboard.putData("Auto mode", chooser);
 	}
 
@@ -139,7 +140,10 @@ public class Robot extends IterativeRobot {
 		Robot.DriveSubsystem.Left2.enableCurrentLimit(false);
 		Robot.DriveSubsystem.Right2.enableCurrentLimit(false);
 		Robot.DriveSubsystem.Right1.enableCurrentLimit(false);
-
+		Robot.DriveSubsystem.Left1.configOpenloopRamp(0, 10);
+		Robot.DriveSubsystem.Left2.configOpenloopRamp(0, 10);
+		Robot.DriveSubsystem.Right1.configOpenloopRamp(0, 10);
+		Robot.DriveSubsystem.Right2.configOpenloopRamp(0, 10);
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -166,18 +170,18 @@ public class Robot extends IterativeRobot {
 			if(gameData.charAt(0) == 'L'){
 				//Put left auto code here
 				SwitchState = true;
-				System.out.println("LEFTSWITCH");
+				//System.out.println("LEFTSWITCH");
 			}else if(gameData.charAt(0) == 'R'){
 				//Put right auto code here
 				SwitchState = false;
-				System.out.println("RIGHTSWITCH");
+				//System.out.println("RIGHTSWITCH");
 			}
 			if(gameData.charAt(1) == 'L'){
 				ScaleState = true;
-				System.out.println("LEFTSCALE");
+				//System.out.println("LEFTSCALE");
 			}else if(gameData.charAt(1) == 'R'){
 				ScaleState = false;
-				System.out.println("RIGHTSCALE");
+				//System.out.println("RIGHTSCALE");
 			}
 			// schedule the autonomous command (example)
 			String Selected = chooser.getSelected();
@@ -185,91 +189,91 @@ public class Robot extends IterativeRobot {
 			case "CenterSwitch":
 				if(SwitchState){
 					autonomousCommand = new CenterLeftSwitch();
-					System.out.println("CLS");
-					System.out.println("CLS");
-					System.out.println("CLS");
-					System.out.println("CLS");
+					//System.out.println("CLS");
+					//System.out.println("CLS");
+					//System.out.println("CLS");
+					//System.out.println("CLS");
 				}else{
 					autonomousCommand = new CenterRightSwitch();
-					System.out.println("CRS");
-					System.out.println("CRS");
-					System.out.println("CRS");
-					System.out.println("CRS");
+					//System.out.println("CRS");
+					//System.out.println("CRS");
+					//System.out.println("CRS");
+					//System.out.println("CRS");
 				}
 				break;
 			case "CenterBase":
 				autonomousCommand = new CenterBaseline();
-				System.out.println("CBL");
-				System.out.println("CBL");
-				System.out.println("CBL");
-				System.out.println("CBL");
+				//System.out.println("CBL");
+				//System.out.println("CBL");
+				//System.out.println("CBL");
+				//System.out.println("CBL");
 				break;
 			case "RightScale":
 				if(ScaleState){
 					autonomousCommand = new RightLeftScale();
-					System.out.println("RLSc");
-					System.out.println("RLSc");
-					System.out.println("RLSc");
-					System.out.println("RLSc");
+					//System.out.println("RLSc");
+					//System.out.println("RLSc");
+					//System.out.println("RLSc");
+					//System.out.println("RLSc");
 				}else{
-					autonomousCommand = new RightRightScale();
-					System.out.println("RRSc");
-					System.out.println("RRSc");
-					System.out.println("RRSc");
-					System.out.println("RRSc");
+					autonomousCommand = new rightrightscalemp();
+					//System.out.println("RRSc");
+					//System.out.println("RRSc");
+					//System.out.println("RRSc");
+					//System.out.println("RRSc");
 				}
 				break;
 			case "RightSwitch":
 				if(SwitchState){
 					autonomousCommand = new RightLeftSwitch();
-					System.out.println("RLS");
-					System.out.println("RLS");
-					System.out.println("RLS");
-					System.out.println("RLS");
+					//System.out.println("RLS");
+					//System.out.println("RLS");
+					//System.out.println("RLS");
+					//System.out.println("RLS");
 				}else{
 					autonomousCommand = new RightRightSwitch();
-					System.out.println("RRS");
-					System.out.println("RRS");
-					System.out.println("RRS");
-					System.out.println("RRS");
+					//System.out.println("RRS");
+					//System.out.println("RRS");
+					//System.out.println("RRS");
+					//System.out.println("RRS");
 				}
 				break;
 			case "LeftScale":
 				if(ScaleState){
-					autonomousCommand = new LeftLeftScale();
-					System.out.println("LLSc");
-					System.out.println("LLSc");
-					System.out.println("LLSc");
-					System.out.println("LLSc");
+					autonomousCommand = new leftleftscalemp();
+					//System.out.println("LLSc");
+					//System.out.println("LLSc");
+					//System.out.println("LLSc");
+					//System.out.println("LLSc");
 				}else{
 					autonomousCommand = new LeftRightScale();
-					System.out.println("LRSc");
-					System.out.println("LRSc");
-					System.out.println("LRSc");
-					System.out.println("LRSc");
+					//System.out.println("LRSc");
+					//System.out.println("LRSc");
+					//System.out.println("LRSc");
+					//System.out.println("LRSc");
 				}
 				break;
 			case "LeftSwitch":
 				if(SwitchState){
 					autonomousCommand = new LeftLeftSwitch();
-					System.out.println("LLS");
-					System.out.println("LLS");
-					System.out.println("LLS");
-					System.out.println("LLS");
+					//System.out.println("LLS");
+					//System.out.println("LLS");
+					//System.out.println("LLS");
+					//System.out.println("LLS");
 				}else{
 					autonomousCommand = new LeftRightSwitch();
-					System.out.println("LRS");
-					System.out.println("LRS");
-					System.out.println("LRS");
-					System.out.println("LRS");
+					//System.out.println("LRS");
+					//System.out.println("LRS");
+					//System.out.println("LRS");
+					//System.out.println("LRS");
 				}
 				break;
 			case "Baseline":
 				autonomousCommand = new Baseline();
-				System.out.println("Base");
-				System.out.println("Base");
-				System.out.println("Base");
-				System.out.println("Base");
+				//System.out.println("Base");
+				//System.out.println("Base");
+				//System.out.println("Base");
+				//System.out.println("Base");
 				break;
 				
 			case "Test":
@@ -283,8 +287,11 @@ public class Robot extends IterativeRobot {
 				break;
 			case "CenterSwitch_MP":
 				if(SwitchState){
+					//autonomousCommand = new twocubeleftsw();
+					//autonomousCommand = new TestForward();
 					autonomousCommand = new CenterLeftSwitch_MP();
 				}else{
+					//autonomousCommand = new twocuberightsw();
 					autonomousCommand = new CenterRightSwitch_MP();
 				}
 				break;
@@ -309,6 +316,10 @@ public class Robot extends IterativeRobot {
 		Robot.DriveSubsystem.Left2.enableCurrentLimit(true);
 		Robot.DriveSubsystem.Right2.enableCurrentLimit(true);
 		Robot.DriveSubsystem.Right1.enableCurrentLimit(true);
+		Robot.DriveSubsystem.Left1.configOpenloopRamp(0.1, 10);
+		Robot.DriveSubsystem.Left2.configOpenloopRamp(0.1, 10);
+		Robot.DriveSubsystem.Right1.configOpenloopRamp(0.1, 10);
+		Robot.DriveSubsystem.Right2.configOpenloopRamp(0.1, 10);
 		gameData = " ";
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();

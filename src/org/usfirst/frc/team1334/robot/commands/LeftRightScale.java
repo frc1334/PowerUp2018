@@ -17,7 +17,7 @@ public class LeftRightScale extends CommandGroup {
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand(Robot.kOppScaleApproach));
     	addSequential(new GyroTurn(-38));
-    	addSequential(new AutoShooterCommand(true));
+    	addSequential(new AutoShooterCommand(true,10));
     }
 
 }

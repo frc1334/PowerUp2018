@@ -27,6 +27,6 @@ public class RightRightScale extends CommandGroup {
     	addParallel(new ShooterAngle(5));
     	addSequential(new AutoDriveCommand(Robot.kCloseScaleFwd));
     	addSequential(new GyroTurn(-39));
-    	addSequential(new AutoShooterCommand(true));
+    	addSequential(new AutoShooterCommand(true,10));
     }
 }

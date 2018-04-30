@@ -13,14 +13,14 @@ import edu.wpi.first.wpilibj.command.Command;
  * 
  */
 public class AutoDriveCommand extends Command {
-	int distance = 0;
+	double distance = 0;
 	long startTime, endTime;
 	boolean inRange = false;
 	double ticks;
-	public static double inchestoticks =  3.43774677003357 * 1024 / 12 / 2;
+	public static double inchestoticks =  3.43774677003357 * 1024 / 12 / 2;//146.68
 	double error;
 	double minimumvoltage = 0.13;
-    public AutoDriveCommand(int Distance) {
+    public AutoDriveCommand(double Distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	distance = Distance;
@@ -33,7 +33,7 @@ public class AutoDriveCommand extends Command {
 
     	endTime = System.currentTimeMillis();
     	startTime = System.currentTimeMillis();
-    	DriveSubsystem.gShift.set(Value.kForward);
+    	DriveSubsystem.gShift.set(Value.kReverse);
     	/* choose the sensor and sensor direction */
     	
 		Robot.DriveSubsystem.Left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Robot.DriveSubsystem.kPIDLoopIdx,
@@ -72,13 +72,13 @@ public class AutoDriveCommand extends Command {
 		/* set closed loop gains in slot0, typically kF stays zero. */
 		Robot.DriveSubsystem.Left1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.6, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Left1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.001, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Left1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//Do not put the acceleration above 2500 units/s^2 otherwise the robot veers
 		Robot.DriveSubsystem.Right1.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.2, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 0.6, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.DriveSubsystem.Right1.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.001, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.02, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.configMotionCruiseVelocity(2700, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.DriveSubsystem.Right1.configMotionAcceleration(2500, Robot.DriveSubsystem.kTimeoutMs);//do not put the acceleration above 2500 units/s^2 otherwise the robot veers
@@ -110,22 +110,23 @@ public class AutoDriveCommand extends Command {
 		Robot.DriveSubsystem.Right1.setSelectedSensorPosition(absolutePosition2, Robot.DriveSubsystem.kPIDLoopIdx, Robot.DriveSubsystem.kTimeoutMs);
 		//distance to ticks conversion if 128codes/rev
 		ticks = distance* inchestoticks;
-		System.out.println(ticks +" distance " + distance);
+		//System.out.println(ticks +" distance " + distance);
 		Robot.DriveSubsystem.shiftGear(true, false);
     	Robot.DriveSubsystem.Left1.set(ControlMode.MotionMagic, ticks);
     	Robot.DriveSubsystem.Right1.set(ControlMode.MotionMagic, ticks);
-    	
+    	Robot.DriveSubsystem.Left1.config_IntegralZone(Robot.DriveSubsystem.kPIDLoopIdx, 2, Robot.DriveSubsystem.kTimeoutMs);
+    	Robot.DriveSubsystem.Right1.config_IntegralZone(Robot.DriveSubsystem.kPIDLoopIdx, 2, Robot.DriveSubsystem.kTimeoutMs);
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
 	protected void execute() {
-    	
+    	System.out.println("running");
     	error = ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0);
     	if(Math.abs(error)<=300 && endTime-startTime < -500){//DO NOT REMOVE THE TIME REQUIREMENT OR ELSE THE PREVIOUS ERROR WILL REMAIN AND THE COMMAND WILL AUTOMATICALLY START MOVING SLOWLY
     		Robot.DriveSubsystem.isClose = true;
     	}
-    	if(Robot.DriveSubsystem.isClose){
+    	/*if(Robot.DriveSubsystem.isClose){
     		if(Math.signum(error) == -1 && Math.abs(error)>=100){
     			Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, -minimumvoltage);
     			Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, -minimumvoltage);
@@ -136,9 +137,9 @@ public class AutoDriveCommand extends Command {
     			Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput, 0);
     			Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput, 0);
     		}
-    	}
-    	//System.out.println(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0));
-    	inRange = Math.abs(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0) ) <= 200;
+    	}*/
+    	////System.out.println(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0));
+    	inRange = Math.abs(ticks-Robot.DriveSubsystem.Left1.getSelectedSensorPosition(0) ) <= 100;
     	if(inRange){endTime = System.currentTimeMillis();}
     	else {startTime = System.currentTimeMillis();}
     }

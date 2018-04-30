@@ -10,8 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class TestForward extends CommandGroup {
 
     public TestForward() {
-    	addSequential(new AutoDriveCommand(12));
-    	addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed,200));
+    	addSequential(new ShooterAngle(5));
+    	addSequential(new ShooterAngle(80));
+    	addSequential(new ShooterAngle(5));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

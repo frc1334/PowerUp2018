@@ -14,7 +14,7 @@ public class RightLeftSwitch extends CommandGroup{
     	addSequential(new GyroTurn(-90));
     	addSequential(new AutoDriveCommand(Robot.kOppSwitchBack));
     	//addSequential(new AutoSpeedCommand(Robot.kSwitchApproachSpeed,Robot.kOppSideSwitchApproachTime));
-    	addSequential(new AutoShooterCommand(false));
+    	addSequential(new AutoShooterCommand(false,10));
 	}
 	
 }

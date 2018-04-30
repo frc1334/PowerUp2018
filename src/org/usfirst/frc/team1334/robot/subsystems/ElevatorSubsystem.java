@@ -131,9 +131,9 @@ public class ElevatorSubsystem extends Subsystem {
 	}
 	
 	public void elevator(double speed,  boolean brake){
-		System.out.println(Elevator1.getSelectedSensorVelocity(0));
-		System.out.println(HighWarn.get()+"HighWarn");
-		System.out.println(LowWarn.get()+"LowWarn");
+		////System.out.println(Elevator1.getSelectedSensorVelocity(0));
+		////System.out.println(HighWarn.get()+"HighWarn");
+		////System.out.println(LowWarn.get()+"LowWarn");
 		if(brake){
 			direction = Math.signum(speed);
 			Elevator1.set(ControlMode.PercentOutput, direction*0.3);

@@ -51,7 +51,7 @@ public class AutoSpeedCommand extends Command {
     protected void end() {
     	Robot.DriveSubsystem.Left1.set(ControlMode.PercentOutput,0);
     	Robot.DriveSubsystem.Right1.set(ControlMode.PercentOutput,0);
-    	System.out.println("Finished");
+    	//System.out.println("Finished");
     	
     }
 

@@ -4,6 +4,7 @@ import org.usfirst.frc.team1334.robot.Robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -26,7 +27,7 @@ public class GyroTurn extends Command {
     	Robot.DriveSubsystem.Left2.setInverted(false);
     	Start = System.currentTimeMillis();
     	End = System.currentTimeMillis();
-    	Robot.DriveSubsystem.shiftGear(false, true);
+    	Robot.DriveSubsystem.gShift.set(Value.kReverse);
     	Robot.DriveSubsystem.setSetpoint(Robot.DriveSubsystem.GyroDrive(Angle));
     }
 
@@ -36,7 +37,7 @@ public class GyroTurn extends Command {
     	Robot.DriveSubsystem.usePIDOutput(Robot.DriveSubsystem.getPIDController().get());
     	Robot.DriveSubsystem.ArcadeDrive(0, Robot.DriveSubsystem.rotateToAngleRate, false);
     	if(Math.abs(Robot.DriveSubsystem.getPIDController().getError()) > 2 ){
-    		Start = System.currentTimeMillis();
+    		Start = System.currentTimeMillis(); 
     	}else{
     		End = System.currentTimeMillis();
     	}
@@ -45,7 +46,7 @@ public class GyroTurn extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         if(End-Start > 200){
-        	System.out.println("finished");
+        	//System.out.println("finished");
         	return true;
         }
         return false;

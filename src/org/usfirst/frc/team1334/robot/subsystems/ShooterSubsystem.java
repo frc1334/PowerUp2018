@@ -32,31 +32,31 @@ public class ShooterSubsystem extends Subsystem{
 			Intake1.set(ControlMode.PercentOutput, 0);
 			Intake2.set(ControlMode.PercentOutput, 0);
 		}
-		System.out.println(Shooter.getSensorCollection().isFwdLimitSwitchClosed()+ "FWD");
-		System.out.println(Shooter.getSensorCollection().isRevLimitSwitchClosed()+ "REV");
+		////System.out.println(Shooter.getSensorCollection().isFwdLimitSwitchClosed()+ "FWD");
+		////System.out.println(Shooter.getSensorCollection().isRevLimitSwitchClosed()+ "REV");
 	}
 	
 	public void driveShooter(double power){
-		System.out.println(power + "power");
+		////System.out.println(power + "power");
 		if( Shooter.getSensorCollection().isFwdLimitSwitchClosed() && power > 0 || Shooter.getSensorCollection().isRevLimitSwitchClosed() && power < 0){
 			Shooter.set(ControlMode.PercentOutput, 0.05);
-			System.out.println("stalling");
+			////System.out.println("stalling");
 			OI.RumbleOP(0.5);
 		}else if((power == 0)){
 			Shooter.set(ControlMode.PercentOutput, 0.05);
-			System.out.println("stalling");
+			////System.out.println("stalling");
 			OI.RumbleOP(0.0);
 		}else if(power > 0){
 			Shooter.set(ControlMode.PercentOutput, power*0.6);
-			System.out.println("upupupupupuppupupuppu");
+			////System.out.println("upupupupupuppupupuppu");
 			OI.RumbleOP(0.0);
 		}else if (power < 0){
 			OI.RumbleOP(0.0);
 			Shooter.set(ControlMode.PercentOutput, power*0.3);
 		}
-		System.out.println(Shooter.getSensorCollection().isFwdLimitSwitchClosed() + "FWD");
-		System.out.println(Shooter.getSensorCollection().isRevLimitSwitchClosed() + "REV");
-		System.out.println(Shooter.getMotorOutputPercent() + "Speed");
+		////System.out.println(Shooter.getSensorCollection().isFwdLimitSwitchClosed() + "FWD");
+		////System.out.println(Shooter.getSensorCollection().isRevLimitSwitchClosed() + "REV");
+		////System.out.println(Shooter.getMotorOutputPercent() + "Speed");
 	}
 	
 	public void highGoal (double delta) {

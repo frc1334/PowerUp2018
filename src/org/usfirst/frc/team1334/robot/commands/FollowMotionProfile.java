@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FollowMotionProfile extends Command {
 	ProfileHandler H;
 	String lfp, rfp, pn;	
-	double end,start,Lerror,Rerror;
+	double end,start,Lerror,Rerror,Stimeout,Etimeout;
     public FollowMotionProfile(String LFP, String RFP, String ProfileName) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -67,6 +67,7 @@ public class FollowMotionProfile extends Command {
 		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,10,10);
 		Robot.DriveSubsystem.Right1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10,10);
 		
+		
     }
 
     // Called just before this Command runs the first time
@@ -74,7 +75,7 @@ public class FollowMotionProfile extends Command {
     	try{
     		H = new ProfileHandler(lfp,rfp);
     	}catch(IOException E){
-    		System.out.println("Profile " + pn + " Failed to Load, File not Found");
+    		//System.out.println("Profile " + pn + " Failed to Load, File not Found");
     	}
     	end = System.currentTimeMillis();
     	start = System.currentTimeMillis();
@@ -82,10 +83,15 @@ public class FollowMotionProfile extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if (H.isover){
+			Etimeout = System.currentTimeMillis();
+		}else{
+			Stimeout = System.currentTimeMillis();
+		}
     	try {
 			H.HandleMP();
 		} catch (InterruptedException e) {
-			System.out.println("Start buffer interrupted");
+			//System.out.println("Start buffer interrupted");
 		}
     	Robot.DriveSubsystem.Left1.set(ControlMode.MotionProfile, H.Set.value);
     	Robot.DriveSubsystem.Right1.set(ControlMode.MotionProfile, H.Set.value);
@@ -102,9 +108,9 @@ public class FollowMotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(H.Lstatus.isLast && H.Rstatus.isLast && end-start>200)
+    	if(H.Lstatus.isLast && H.Rstatus.isLast || Etimeout - Stimeout > 1000)
     	System.out.println("Motion Profile Complete");
-        return H.Lstatus.isLast && H.Rstatus.isLast && end-start>200;
+        return H.Lstatus.isLast && H.Rstatus.isLast && end-start>200 || Etimeout - Stimeout > 1000;
         
     }
 

@@ -94,11 +94,11 @@ public class DriveSubsystem extends PIDSubsystem {
 			turn *= .6;
 			speed *= .6;
 		}
-		System.out.println(turn);
+		//System.out.println(turn);
 		TankDrive(-speed -turn, speed - turn);
-		System.out.print(speed);
-		//System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
-		//System.out.println(Right1.getClosedLoopError(0));
+		//System.out.print(speed);
+		////System.out.println(Left1.getClosedLoopError(0)); // prints amount of error of both encoders
+		////System.out.println(Right1.getClosedLoopError(0));
 	}
 
 	@Override

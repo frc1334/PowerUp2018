@@ -19,22 +19,23 @@ public class ShooterAngle extends Command {
 	double ticks;
 	int ticksperrev = 1024;
 	double minimumvoltageup = 0.305;
-	double minimumvoltagedown = -0.002;
+	double minimumvoltagedown = -0.2;
 	boolean isPID = true;
 	
     public ShooterAngle(int Angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.ShooterSubsystem);
+    	//requires(Robot.ShooterSubsystem);
     	angle = Angle;
     	Robot.ShooterSubsystem.zeroed = false;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.ShooterSubsystem.zeroed = false;
     	while(!Robot.ShooterSubsystem.zeroed){
     		Robot.ShooterSubsystem.zeroShooterUpwards();
-    		System.out.println(Robot.ShooterSubsystem.Shooter.getMotorOutputPercent());
+    		System.out.println("ZEROING");
     	}
     	endTime = System.currentTimeMillis();
     	startTime = System.currentTimeMillis();
@@ -49,8 +50,9 @@ public class ShooterAngle extends Command {
 		Robot.ShooterSubsystem.Shooter.configAllowableClosedloopError(10, 0, 10);
 		Robot.ShooterSubsystem.Shooter.config_kF(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.ShooterSubsystem.Shooter.config_kP(Robot.DriveSubsystem.kPIDLoopIdx, 8, Robot.DriveSubsystem.kTimeoutMs);
-		Robot.ShooterSubsystem.Shooter.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.ShooterSubsystem.Shooter.config_kI(Robot.DriveSubsystem.kPIDLoopIdx, 0.001, Robot.DriveSubsystem.kTimeoutMs);
 		Robot.ShooterSubsystem.Shooter.config_kD(Robot.DriveSubsystem.kPIDLoopIdx, 0.0, Robot.DriveSubsystem.kTimeoutMs);
+		Robot.ShooterSubsystem.Shooter.config_IntegralZone(Robot.DriveSubsystem.kPIDLoopIdx,20, Robot.DriveSubsystem.kTimeoutMs);
 		int absolutePosition = Robot.ShooterSubsystem.Shooter.getSensorCollection().getPulseWidthPosition();
 		absolutePosition &= 0xFFF;
 		if (isInverted)
@@ -64,36 +66,27 @@ public class ShooterAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(ticks);
+    	
     	double motorout = Robot.ShooterSubsystem.Shooter.getMotorOutputPercent();
     	double error = ticks - Robot.ShooterSubsystem.Shooter.getSelectedSensorPosition(0);
-    	if( motorout < minimumvoltageup && motorout > 0 || motorout > minimumvoltagedown && motorout < 0){
+    	
+    	if( motorout < minimumvoltageup && motorout > 0 || motorout > minimumvoltagedown && motorout < 0 && endTime-startTime < -700){
     		isPID = false;
+    		System.out.println("dang");
     	}
-    	if(isPID){
+    	System.out.println(error);
     		
-    	}else{
-    		if(Math.signum(error) == 1 && Math.abs(error) >= 5){
-    			Robot.ShooterSubsystem.Shooter.set(ControlMode.PercentOutput, minimumvoltageup);
-    			System.out.println("minimumupupup");
-    		}else if(Math.signum(error) == -1 && Math.abs(error) >= 5){
-    			Robot.ShooterSubsystem.Shooter.set(ControlMode.PercentOutput, minimumvoltagedown);
-    			System.out.println("minimumdowndown");
-    		}else{
-    			Robot.ShooterSubsystem.Shooter.set(ControlMode.PercentOutput, 0.05);
-    			System.out.println("minimumzerozero");
-    		}
-    	}
+    	
     	
     	inRange = Math.abs(ticks-Robot.ShooterSubsystem.Shooter.getSelectedSensorPosition(0)) <= 5;
-    	System.out.print(inRange);
+    	//System.out.print(inRange);
     	if(inRange){endTime = System.currentTimeMillis();}
     	else {startTime = System.currentTimeMillis();}    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (endTime - startTime > 350) { System.out.println("Finished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter Angle" + angle);
+    	if (endTime - startTime > 350 || angle>45 && Robot.ShooterSubsystem.Shooter.getSensorCollection().isRevLimitSwitchClosed()) { System.out.println(angle +"Finished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter AngleFinished Shooter Angle" + angle);
 		return true; }
     return false;
     }
